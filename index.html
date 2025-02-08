@@ -1,13 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-gray-900">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diversion Prototype</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diversion Prototype</title>
+    <link rel="stylesheet" href="tailwindcss" />
 </head>
-<body>
-  <h1>Demo</h1>
+<body class="min-h-screen flex flex-col items-center justify-center p-8 text-gray-100 font-mono">
+    <h1 class="text-4xl font-bold mb-8 bg-gray-800 px-6 py-3 rounded-xl shadow-lg tracking-wider">
+        Demo
+    </h1>
+    <audio id="source" class="hidden"></audio>
+    <div class="w-full max-w-2xl">
+        <canvas id="visualisation" class="w-full h-24 bg-gray-800 rounded-t-lg shadow-lg"></canvas>
+        
+        <div id="transcript" class="min-h-[400px] w-full bg-gray-800/50 p-6 rounded-b-lg text-gray-300 overflow-y-auto">
+        </div>
+    </div>
+    
+    <div id="app" x-data="{ playing: true }" class="flex gap-4 mt-6">
+        <button 
+            id="play" 
+            x-show="!playing" 
+            @click="playing = true"
+            class="px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-900"
+        >
+            Play
+        </button>
+        <button 
+            id="pause" 
+            x-show="playing" 
+            @click="playing = false"
+            class="px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-900"
+        >
+            Pause
+        </button>
+    </div>
 
-<script src="main.ts"></script>
+    <script src="main.ts"></script>
 </body>
 </html>

@@ -7,5 +7,10 @@
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@types/alpinejs": "^3.13.11",
+    "alpinejs": "^3.14.8",
+    "bun-plugin-tailwind": "^0.0.14"
   }
 }

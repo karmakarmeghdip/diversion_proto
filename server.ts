@@ -1,5 +1,9 @@
 import index from './index.html';
 
+if(!process.env.OPENAI_API_KEY) {
+  throw new Error("Please set the OPENAI_API_KEY environment variable");
+}
+
 Bun.serve({
   static: {
     '/': index
