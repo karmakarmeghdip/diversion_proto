@@ -6,26 +6,57 @@
     <title>Diversion Prototype</title>
     <link rel="stylesheet" href="tailwindcss" />
     <script src="https://cdn.tailwindcss.com"></script>
-
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-8 text-gray-100 font-mono">
-    <h1 class="text-4xl font-bold mb-8 bg-gray-800 px-6 py-3 rounded-xl shadow-lg tracking-wider">
+    <!-- Navbar -->
+    <nav class="w-full bg-gray-950 shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50">
+        <h1 class="text-2xl font-bold text-indigo-400 tracking-wider">El Psy Congru</h1>
+
+        <div class="flex space-x-6">
+            <button class="text-gray-300 hover:text-indigo-400 transition-all duration-300">
+                Login
+            </button>
+            <button class="text-gray-300 hover:text-indigo-400 transition-all duration-300">
+                Signup
+            </button>
+
+            <div class="relative group">
+                <img src="user.png" alt="User" class="w-10 h-10 rounded-full border-2 border-gray-400 cursor-pointer hover:border-indigo-400 transition-colors">
+                <div class="absolute right-0 mt-2 w-48 bg-gray-800 shadow-lg rounded-lg hidden group-hover:block">
+                    <a href="#" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-indigo-400 rounded-t-lg transition-colors">Profile</a>
+                    <a href="#" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-indigo-400 rounded-b-lg transition-colors">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Spacing for navbar -->
+    <div class="mt-24"></div>
+
+    <!-- Demo Section -->
+    <h1 class="text-4xl font-bold mb-8 bg-gray-800 px-8 py-4 rounded-xl shadow-lg tracking-wider text-center bg-opacity-90 hover:bg-opacity-100 transition-all">
         Demo
     </h1>
+    
+    <!-- Audio Element -->
     <audio id="source" class="hidden"></audio>
-    <div class="w-full max-w-2xl">
-        <canvas id="visualisation" class="w-full h-24 bg-gray-800 rounded-t-lg shadow-lg"></canvas>
+    
+    <!-- Visualisation and Transcript Container -->
+    <div class="w-full max-w-4xl px-4">
+        <canvas id="visualisation" class="w-full h-20 bg-gray-800 rounded-t-lg shadow-lg"></canvas>
         
-        <div id="transcript" class="min-h-[400px] w-full bg-gray-800/50 p-6 rounded-b-lg text-gray-300 overflow-y-auto">
+        <div id="transcript" class="min-h-[300px] w-full bg-gray-800/50 p-6 rounded-b-lg text-gray-300 overflow-y-auto backdrop-blur-sm">
+            <!-- Transcript content will go here -->
         </div>
     </div>
     
-    <div id="app" x-data="{ playing: true }" class="flex gap-4 mt-6">
+    <!-- Controls -->
+    <div id="app" x-data="{ playing: true }" class="flex gap-6 mt-8">
         <button 
             id="play" 
             x-show="!playing" 
             @click="playing = true"
-            class="px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-900"
+            class="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 font-medium"
         >
             Play
         </button>
@@ -33,7 +64,7 @@
             id="pause" 
             x-show="playing" 
             @click="playing = false"
-            class="px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-900"
+            class="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 font-medium"
         >
             Pause
         </button>
