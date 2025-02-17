@@ -1,48 +1,26 @@
-
 let pc: RTCPeerConnection;
+let currentChatBubble: HTMLElement | null = null;
 
+/**
+ * Initializes the WebRTC connection and sets up event listeners.
+ */
 export async function init() {
-  // Get an ephemeral key from your server - see server code below
   const tokenResponse = await fetch("/session");
   const data = await tokenResponse.json();
   const EPHEMERAL_KEY = data.client_secret.value;
 
-  // Create a peer connection
   pc = new RTCPeerConnection();
 
-  // Set up to play remote audio from the model
   const audioEl = document.getElementById("source") as HTMLAudioElement || document.createElement("audio");
   audioEl.autoplay = true;
-  pc.ontrack = e => audioEl.srcObject = e.streams[0];
+  pc.ontrack = (e) => audioEl.srcObject = e.streams[0];
 
-  // Add local audio track for microphone input in the browser
-  const ms = await navigator.mediaDevices.getUserMedia({
-    audio: true
-  });
+  const ms = await navigator.mediaDevices.getUserMedia({ audio: true });
   pc.addTrack(ms.getTracks()[0]);
 
-  // Set up data channel for sending and receiving events
   const dc = pc.createDataChannel("oai-events");
-  dc.addEventListener("message", (e) => {
-    const realtimeEvent = JSON.parse(e.data);
-    console.log(realtimeEvent);
-    const comp = document.getElementById("transcript");
-    if (!comp) return;
-    if (realtimeEvent.type === 'response.done') {
-      comp.innerHTML = "";
-      realtimeEvent.response?.output?.forEach((output: any) => {
-        output.content?.forEach((content: any) => {
-          comp.innerHTML += content.transcript;
-        });
-      });
-    } else if(realtimeEvent.type === 'response.audio_transcript.delta') {
-      comp.innerHTML += realtimeEvent.delta;
-    } else if(realtimeEvent.type === 'output_audio_buffer.cleared' || realtimeEvent.type === 'output_audio_buffer.stopped') {
-      comp.innerHTML = "";
-    }
-  });
+  dc.addEventListener("message", (e) => handleIncomingMessage(e));
 
-  // Start the session using the Session Description Protocol (SDP)
   const offer = await pc.createOffer();
   await pc.setLocalDescription(offer);
 
@@ -53,18 +31,58 @@ export async function init() {
     body: offer.sdp,
     headers: {
       Authorization: `Bearer ${EPHEMERAL_KEY}`,
-      "Content-Type": "application/sdp"
+      "Content-Type": "application/sdp",
     },
   });
 
-  const answer = {
+  const answer: RTCSessionDescriptionInit = {
     type: "answer",
     sdp: await sdpResponse.text(),
-  };
-  // @ts-ignore
+};
   await pc.setRemoteDescription(answer);
 }
 
+/**
+ * Handles incoming WebRTC messages and updates the UI accordingly.
+ */
+function handleIncomingMessage(event: MessageEvent) {
+  const realtimeEvent = JSON.parse(event.data);
+
+  if (realtimeEvent.type === "response.audio_transcript.delta") {
+    appendToChatBubble(realtimeEvent.delta);
+  } else if (realtimeEvent.type === "response.done") {
+    const finalMessage = realtimeEvent.response?.output?.map((output: any) =>
+      output.content?.map((content: any) => content.transcript).join("")
+    ).join("");
+    finalizeChatBubble(finalMessage || "");
+  }
+}
+
+/**
+ * Appends delta text to the current chat bubble.
+ */
+function appendToChatBubble(delta: string) {
+  if (!currentChatBubble) {
+    currentChatBubble = document.createElement("div");
+    currentChatBubble.className = "chat-bubble";
+    document.getElementById("transcript")?.appendChild(currentChatBubble);
+  }
+  currentChatBubble.innerText += delta;
+}
+
+/**
+ * Finalizes the current chat bubble with the complete message.
+ */
+function finalizeChatBubble(finalMessage: string) {
+  if (currentChatBubble) {
+    currentChatBubble.innerText = finalMessage;
+    currentChatBubble = null;
+  }
+}
+
+/**
+ * Pauses audio transmission by disabling the local audio track.
+ */
 export const pause = () => {
   pc.getSenders().forEach(sender => {
     if (sender.track) {
@@ -73,6 +91,9 @@ export const pause = () => {
   });
 }
 
+/**
+ * Resumes audio transmission by enabling the local audio track.
+ */
 export const play = () => {
   pc.getSenders().forEach(sender => {
     if (sender.track) {

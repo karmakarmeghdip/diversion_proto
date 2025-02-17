@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-gray-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/typescript@latest/lib/typescriptServices.js"></script>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-8 text-gray-100 font-mono">
+
+    <nav class="w-full bg-gray-950 shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0">
+        <h1 class="text-2xl font-bold text-indigo-400 tracking-wider">El Psy Congru</h1>
+
+        <div class="flex space-x-6">
+            <button class="text-gray-300 hover:text-indigo-400 transition-all duration-300">
+                Login
+            </button>
+            <button class="text-gray-300 hover:text-indigo-400 transition-all duration-300">
+                Signup
+            </button>
+
+            <div class="relative group">
+                <img src="user.png" alt="User" class="w-10 h-10 rounded-full border-2 border-gray-400 cursor-pointer">
+                <div class="absolute right-0 mt-2 w-48 bg-gray-800 shadow-lg rounded-lg hidden group-hover:block">
+                    <a href="#" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-t-lg">Profile</a>
+                    <a href="#" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-b-lg">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mt-24 flex flex-col items-center">
+        <h1 class="text-4xl font-bold mb-6 bg-gray-800 px-6 py-3 rounded-xl shadow-lg tracking-wider">
+            Welcome User
+        </h1>
+
+        <button 
+            id="session-btn" 
+            class="mt-4 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900">
+            Start a Session
+        </button>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+            <!-- Line Chart Container -->
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                <p class="text-gray-300 text-lg text-center mb-4">Daily Activity</p>
+                <div style="width: 600px; height: 400px;">
+                    <canvas id="activityChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Pie Chart Container -->
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+                <p class="text-gray-300 text-lg text-center mb-4">Performance Breakdown</p>
+                <div style="width: 600px; height: 400px;">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.ts"></script>
+</body>
+</html>

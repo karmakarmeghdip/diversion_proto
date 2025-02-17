@@ -1,12 +1,15 @@
 import index from './index.html';
+import dashboard from './dashboard.html';
 
-if(!process.env.OPENAI_API_KEY) {
+if (!process.env.OPENAI_API_KEY) {
   throw new Error("Please set the OPENAI_API_KEY environment variable");
 }
 
 Bun.serve({
+  // Serve multiple static files
   static: {
-    '/': index
+    '/': index,
+    '/dashboard': dashboard,
   },
   development: true,
   async fetch(request, server) {
@@ -25,6 +28,6 @@ Bun.serve({
       const data = await r.json();
       return new Response(JSON.stringify(data));
     }
-    return new Response("Not Found", { status: 404 })
+    return new Response("Not Found", { status: 404 });
   },
-})
+});
