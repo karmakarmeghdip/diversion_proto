@@ -48,6 +48,8 @@ export async function init() {
 function handleIncomingMessage(event: MessageEvent) {
   const realtimeEvent = JSON.parse(event.data);
 
+  // console.log(realtimeEvent);
+
   if (realtimeEvent.type === "response.audio_transcript.delta") {
     appendToChatBubble(realtimeEvent.delta);
   } else if (realtimeEvent.type === "response.done") {
@@ -55,6 +57,8 @@ function handleIncomingMessage(event: MessageEvent) {
       output.content?.map((content: any) => content.transcript).join("")
     ).join("");
     finalizeChatBubble(finalMessage || "");
+  } else if (realtimeEvent.type === "conversation.item.input_audio_transcription.completed") {
+    appendUserMessageBubble(realtimeEvent.transcript);
   }
 }
 
@@ -78,6 +82,10 @@ function finalizeChatBubble(finalMessage: string) {
     currentChatBubble.innerText = finalMessage;
     currentChatBubble = null;
   }
+}
+
+function appendUserMessageBubble(fullMessage: string) {
+  console.log(fullMessage);
 }
 
 /**

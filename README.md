@@ -19,3 +19,20 @@ This project was created using `bun init` in bun v1.2.1. [Bun](https://bun.sh) i
 
 
 #### Colour Hex Code : #cde9ab
+
+
+```Object { type: "conversation.item.input_audio_transcription.completed", event_id: "event_B2MBvS9r6qXbR4CmSI1jn", item_id: "item_B2MBqfWyjDjmiirdnUIUT", content_index: 0, transcript: "Can you tell me the average lifespan of an elephant?\n" }
+​
+content_index: 0
+​
+event_id: "event_B2MBvS9r6qXbR4CmSI1jn"
+​
+item_id: "item_B2MBqfWyjDjmiirdnUIUT"
+​
+transcript: "Can you tell me the average lifespan of an elephant?\n"
+​
+type: "conversation.item.input_audio_transcription.completed"
+​
+<prototype>: Object { … }
+ai.ts:51:10
+```

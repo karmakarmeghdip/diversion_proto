@@ -13,8 +13,12 @@ export const app = new Hono().use(logger()).get('/session', async (c) => {
     body: JSON.stringify({
       model: "gpt-4o-realtime-preview-2024-12-17",
       voice: "verse",
+      instructions: "", // TODO: Add proompting
+      input_audio_transcription: {
+        model: 'whisper-1'
+      }
     }),
   });
   const data = await r.json();
   return c.json(data);
-})
+}).post('/auth/register')
