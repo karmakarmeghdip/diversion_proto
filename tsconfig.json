@@ -30,6 +30,6 @@
     // Isolated modules (useful for modern projects)
     "isolatedModules": true
   },
-  "include": ["*.ts"],
+  "include": ["*.ts", "src/main.ts", "src/dashboard.ts"],
   "exclude": ["node_modules"]
 }

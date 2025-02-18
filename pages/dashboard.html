@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="tailwindcss" />
     <title>Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://unpkg.com/typescript@latest/lib/typescriptServices.js"></script>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-8 text-gray-100 font-mono">
 
@@ -22,7 +20,7 @@
             </button>
 
             <div class="relative group">
-                <img src="user.png" alt="User" class="w-10 h-10 rounded-full border-2 border-gray-400 cursor-pointer">
+                <img src="/assests/user.png" alt="User" class="w-10 h-10 rounded-full border-2 border-gray-400 cursor-pointer">
                 <div class="absolute right-0 mt-2 w-48 bg-gray-800 shadow-lg rounded-lg hidden group-hover:block">
                     <a href="#" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-t-lg">Profile</a>
                     <a href="#" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-b-lg">Logout</a>
@@ -61,6 +59,6 @@
         </div>
     </div>
 
-    <script src="dashboard.ts"></script>
+    <script src="/src/dashboard.ts"></script>
 </body>
 </html>

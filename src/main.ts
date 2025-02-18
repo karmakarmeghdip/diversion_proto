@@ -1,7 +1,6 @@
-import Alpine from 'alpinejs'
-import { init, pause, play } from './src/ai'
-import { draw } from './src/visualisation';
-Alpine.start()
+import { init, pause, play } from './ai'
+import { draw } from './visualisation';
+
 
 init();
 draw();

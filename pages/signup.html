@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="registrationstyle.css">
-    <title></title>
+    <link rel="stylesheet" href="/styles/signup.css">
+    <script defer src="/node_modules/alpinejs/dist/cdn.js"></script>
+    <title>Authenticate</title>
 </head>
 <body>
-    <div class="container" id="container">
+    <div class="container" id="container" x-data="{ active: true }" :class="active || 'active'">
         <div class="form-container sign-up">
             <form id="sec">
                 <h1 >Create Account</h1>
@@ -33,20 +34,19 @@
         <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-left">
-                    <img src="assests/el.svg" alt="sorry" class="pic">
+                    <img src="/assests/el.svg" alt="sorry" class="pic">
                     <h1>Welcome Back!</h1> <br>
                    
-                    <button class="hidden1" id="login">Sign In</button>
+                    <button class="hidden1" id="login" @click="active=true">Sign In</button>
                 </div>
                 <div class="toggle-panel toggle-right">
-                    <img src="assests/el.svg" alt="sorry" class="pic">
+                    <img src="/assests/el.svg" alt="sorry" class="pic">
                     <h1>Create an Account</h1>
                     
-                    <button class="hidden2" id="register">Sign Up</button>
+                    <button class="hidden2" id="register" @click="active=false">Sign Up</button>
                 </div>
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
