@@ -1,31 +1,104 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-gray-900">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diversion Prototype</title>
-    <!-- <link rel="stylesheet" href="tailwindcss" /> -->
-     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/styles/tailwind.css">
     <script defer src="/node_modules/alpinejs/dist/cdn.js"></script>
+    <style>
+        /* Catppuccin Colors */
+        :root {
+            /* Frappe theme */
+            --rosewater: #f2d5cf;
+            --flamingo: #eebebe;
+            --pink: #f4b8e4;
+            --mauve: #ca9ee6;
+            --red: #e78284;
+            --maroon: #ea999c;
+            --peach: #ef9f76;
+            --yellow: #e5c890;
+            --green: #a6d189;
+            --teal: #81c8be;
+            --sky: #99d1db;
+            --sapphire: #85c1dc;
+            --blue: #8caaee;
+            --lavender: #babbf1;
+            --text: #c6d0f5;
+            --subtext1: #b5bfe2;
+            --subtext0: #a5adce;
+            --overlay2: #949cbb;
+            --overlay1: #838ba7;
+            --overlay0: #737994;
+            --surface2: #626880;
+            --surface1: #51576d;
+            --surface0: #414559;
+            --base: #303446;
+            --mantle: #292c3c;
+            --crust: #232634;
+        }
+
+        .light {
+            /* Latte theme */
+            --rosewater: #dc8a78;
+            --flamingo: #dd7878;
+            --pink: #ea76cb;
+            --mauve: #8839ef;
+            --red: #d20f39;
+            --maroon: #e64553;
+            --peach: #fe640b;
+            --yellow: #df8e1d;
+            --green: #40a02b;
+            --teal: #179299;
+            --sky: #04a5e5;
+            --sapphire: #209fb5;
+            --blue: #1e66f5;
+            --lavender: #7287fd;
+            --text: #4c4f69;
+            --subtext1: #5c5f77;
+            --subtext0: #6c6f85;
+            --overlay2: #7c7f93;
+            --overlay1: #8c8fa1;
+            --overlay0: #9ca0b0;
+            --surface2: #acb0be;
+            --surface1: #bcc0cc;
+            --surface0: #ccd0da;
+            --base: #eff1f5;
+            --mantle: #e6e9ef;
+            --crust: #dce0e8;
+        }
+
+        .theme-transition {
+            transition: all 0.3s ease;
+        }
+    </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-8 text-gray-100 font-mono">
+<body x-data="{ darkMode: true }" :class="darkMode ? '' : 'light'" class="min-h-screen flex flex-col items-center justify-center p-8 font-mono theme-transition" style="background-color: var(--base); color: var(--text);">
     <!-- Navbar -->
-    <nav class="w-full bg-gray-950 shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50">
-        <h1 class="text-2xl font-bold text-indigo-400 tracking-wider">El Psy Congru</h1>
-
-        <div class="flex space-x-6">
-            <button class="text-gray-300 hover:text-indigo-400 transition-all duration-300">
-                Login
+    <nav class="w-full shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50 theme-transition" style="background-color: var(--crust);">
+        <h1 class="text-2xl font-bold tracking-wider" style="color: var(--mauve);">El Psy Congru</h1>
+        
+        <div class="flex items-center space-x-6">
+            <!-- Theme Toggle -->
+            <button @click="darkMode = !darkMode" class="p-2 rounded-lg theme-transition" :style="darkMode ? 'background-color: var(--surface0)' : 'background-color: var(--surface1)'">
+                <svg x-show="darkMode" class="w-6 h-6" style="color: var(--yellow);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                <svg x-show="!darkMode" class="w-6 h-6" style="color: var(--blue);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                </svg>
             </button>
-            <button class="text-gray-300 hover:text-indigo-400 transition-all duration-300">
-                Signup
-            </button>
 
+            <button class="hover:text-mauve transition-all duration-300" style="color: var(--text);">Login</button>
+            <button class="hover:text-mauve transition-all duration-300" style="color: var(--text);">Signup</button>
+            
             <div class="relative group">
-                <img src="/assests/user.png" alt="User" class="w-10 h-10 rounded-full border-2 border-gray-400 cursor-pointer hover:border-indigo-400 transition-colors">
-                <div class="absolute right-0 mt-2 w-48 bg-gray-800 shadow-lg rounded-lg hidden group-hover:block">
-                    <a href="#" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-indigo-400 rounded-t-lg transition-colors">Profile</a>
-                    <a href="#" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-indigo-400 rounded-b-lg transition-colors">Logout</a>
+                <div class="w-10 h-10 rounded-full cursor-pointer theme-transition" style="background-color: var(--surface0); border: 2px solid var(--overlay0);">
+                    <img src="../assests//user.png" alt="User" class="w-full h-full rounded-full">
+                </div>
+                <div class="absolute right-0 mt-2 w-48 rounded-lg hidden group-hover:block shadow-lg theme-transition" style="background-color: var(--mantle);">
+                    <a href="#" class="block px-4 py-2 rounded-t-lg hover:text-mauve transition-colors" style="color: var(--text);">Profile</a>
+                    <a href="#" class="block px-4 py-2 rounded-b-lg hover:text-mauve transition-colors" style="color: var(--text);">Logout</a>
                 </div>
             </div>
         </div>
@@ -34,43 +107,48 @@
     <!-- Spacing for navbar -->
     <div class="mt-24"></div>
 
+    <!-- Today's Date -->
+    <div id="date-display" class="text-lg font-semibold px-6 py-3 rounded-lg shadow-md mb-6 theme-transition" style="background-color: var(--surface0); color: var(--text);">
+        22ND FEBRUARY
+    </div>
+
     <!-- Demo Section -->
-    <h1 class="text-4xl font-bold mb-8 bg-gray-800 px-8 py-4 rounded-xl shadow-lg tracking-wider text-center bg-opacity-90 hover:bg-opacity-100 transition-all">
-        Demo
+    <h1 class="text-2xl font-bold mb-8 px-8 py-4 rounded-xl shadow-lg tracking-wider text-center transition-all theme-transition" style="background-color: var(--surface0); color: var(--text);">
+        Start Chatting
     </h1>
-    
+
     <!-- Audio Element -->
     <audio id="source" class="hidden"></audio>
-    
+
     <!-- Visualisation and Transcript Container -->
     <div class="w-full max-w-4xl px-4">
-        <canvas id="visualisation" class="w-full h-20 bg-gray-800 rounded-t-lg shadow-lg"></canvas>
+        <canvas id="visualisation" class="w-full h-20 rounded-t-lg shadow-lg theme-transition" style="background-color: var(--surface0);"></canvas>
         
-        <div id="transcript" class="min-h-[300px] w-full bg-gray-800/50 p-6 rounded-b-lg text-gray-300 overflow-y-auto backdrop-blur-sm">
+        <div id="transcript" class="min-h-[300px] w-full p-6 rounded-b-lg overflow-y-auto backdrop-blur-sm theme-transition" style="background-color: var(--surface0); color: var(--text);">
             <!-- Transcript content will go here -->
         </div>
     </div>
-    
+
     <!-- Controls -->
     <div id="app" x-data="{ playing: true }" class="flex gap-6 mt-8">
         <button 
-            id="play" 
-            x-show="!playing" 
+            id="play"
+            x-show="!playing"
             @click="playing = true"
-            class="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 font-medium"
+            class="px-8 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none theme-transition"
+            style="background-color: var(--mauve); color: var(--base);"
         >
             Play
         </button>
         <button 
-            id="pause" 
-            x-show="playing" 
+            id="pause"
+            x-show="playing"
             @click="playing = false"
-            class="px-8 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 font-medium"
+            class="px-8 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none theme-transition"
+            style="background-color: var(--mauve); color: var(--base);"
         >
             Pause
         </button>
     </div>
-
-    <script src="/src/main.ts"></script>
 </body>
 </html>
