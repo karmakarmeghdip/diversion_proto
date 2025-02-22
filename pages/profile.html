@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white rounded-lg shadow-lg p-8 max-w-2xl w-full flex flex-col md:flex-row md:items-start space-y-6 md:space-y-0 md:space-x-8">
+    <!-- Profile Picture -->
+    <div class="flex-shrink-0">
+      <img
+        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces&auto=format&q=80"
+        alt="Profile Picture"
+        class="w-32 h-32 rounded-full border-4 border-blue-500 object-cover"
+      />
+    </div>
+
+    <!-- Profile Details -->
+    <div class="flex-1">
+      <h1 class="text-3xl font-bold text-gray-800 mb-2">John Doe</h1>
+      <p class="text-gray-600 mb-4">
+        <span class="font-semibold">Email:</span> johndoe@example.com
+      </p>
+
+      <!-- Email Verification -->
+      <div class="flex items-center mb-4">
+        <span class="font-semibold text-gray-600">Email Verified:</span>
+        <span class="ml-2 px-2 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-600">
+          True
+        </span>
+      </div>
+
+      <!-- Account Created -->
+      <p class="text-gray-600 mb-2">
+        <span class="font-semibold">Account Created:</span> January 1, 2023
+      </p>
+
+      <!-- Last Updated -->
+      <p class="text-gray-600">
+        <span class="font-semibold">Last Updated:</span> October 10, 2023
+      </p>
+    </div>
+  </div>
+</body>
+</html>
