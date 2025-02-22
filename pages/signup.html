@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,16 +9,17 @@
     <script defer src="/node_modules/alpinejs/dist/cdn.js"></script>
     <title>Authenticate</title>
 </head>
+
 <body>
     <div class="container" id="container" x-data="{ active: true }" :class="active || 'active'">
         <div class="form-container sign-up">
             <form id="sec">
-                <h1 >Create Account</h1>
+                <h1>Create Account</h1>
                 <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="icon google"><i class="fa-brands fa-google-plus-g"></i></a>
+                    <!-- <a href="#" class="icon"><i class="fa-brands fa-github"></i></a> -->
                 </div>
-               <span>Enter your details to Login</span>
+                <span>Enter your details to Login</span>
                 <input type="text" placeholder="Name">
                 <input type="email" placeholder="Email">
                 <input type="password" placeholder="Password">
@@ -25,37 +27,39 @@
             </form>
         </div>
         <div class="form-container sign-in">
-           <form>
-               <h1>Sign in!</h1>
-               <div class="social-icons">
-                <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-            </div>
+            <form>
+                <h1>Sign in!</h1>
+                <div class="social-icons">
+                    <script type="module" src="/src/authClient.ts"></script>
+                    <a href="#" class="icon google"><i class="fa-brands fa-google-plus-g"></i></a>
+                    <!-- <a href="#" class="icon"><i class="fa-brands fa-github"></i></a> -->
+                </div>
                 <span>Use your email & password to Login</span>
                 <input type="email" placeholder="Email">
                 <input type="password" placeholder="Password">
                 <a href="#" id="ff">Forget Your Password?</a>
-                <button >Sign In</button>
+                <button>Sign In</button>
             </form>
         </div>
         <div class="toggle-container">
             <div class="toggle">
                 <div class="toggle-panel toggle-left">
-                    <img src="/assests/el.svg" alt="sorry" class="pic">
+                    <img src="/assests/el.svg" alt="el" class="pic">
                     <h1>Welcome Back!</h1> <br>
-                   
+
                     <button class="hidden1" id="login" @click="active=true">Sign In</button>
                 </div>
                 <div class="toggle-panel toggle-right">
-                    <img src="/assests/el.svg" alt="sorry" class="pic">
+                    <img src="/assests/el.svg" alt="el" class="pic">
                     <h1>Create an Account</h1>
-                    
+
                     <button class="hidden2" id="register" @click="active=false">Sign Up</button>
-                    
+
                 </div>
-                  
+
             </div>
         </div>
     </div>
 </body>
+
 </html>

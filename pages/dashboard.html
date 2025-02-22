@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" class="bg-gray-900">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="tailwindcss" />
     <title>Dashboard</title>
 </head>
+
 <body class="min-h-screen flex flex-col items-center justify-center p-8 text-gray-100 font-mono">
 
     <nav class="w-full bg-gray-950 shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0">
         <h1 class="text-2xl font-bold text-indigo-400 tracking-wider">El Psy Congru</h1>
 
         <div class="flex space-x-6">
-            <button class="text-gray-300 hover:text-indigo-400 transition-all duration-300">
+            <button class="text-gray-300 hover:text-indigo-400 transition-all duration-300 userin">
                 Login
             </button>
-            <button class="text-gray-300 hover:text-indigo-400 transition-all duration-300">
+            <button class="text-gray-300 hover:text-indigo-400 transition-all duration-300 userin">
                 Signup
             </button>
 
-            <div class="relative group">
-                <img src="/assests/user.png" alt="User" class="w-10 h-10 rounded-full border-2 border-gray-400 cursor-pointer">
+            <div class="relative group userout">
+                <img src="/assests/user.png" id="profileimg" alt="User"
+                    class="w-10 h-10 rounded-full border-2 border-gray-400 cursor-pointer">
                 <div class="absolute right-0 mt-2 w-48 bg-gray-800 shadow-lg rounded-lg hidden group-hover:block">
                     <a href="#" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-t-lg">Profile</a>
                     <a href="#" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-b-lg">Logout</a>
@@ -34,8 +37,7 @@
             Welcome User
         </h1>
 
-        <button 
-            id="session-btn" 
+        <button id="session-btn"
             class="mt-4 px-6 py-3 bg-indigo-600 hover:bg-indigo-500 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900">
             Start a Session
         </button>
@@ -60,5 +62,7 @@
     </div>
 
     <script src="/src/dashboard.ts"></script>
+    <script src="/src/authClient.ts"></script>
 </body>
+
 </html>
