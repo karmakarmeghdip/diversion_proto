@@ -8,6 +8,8 @@
   },
   "devDependencies": {
     "@catppuccin/tailwindcss": "^0.1.6",
+    "@better-auth/cli": "^1.1.19",
+    "@biomejs/biome": "1.9.4",
     "@types/bun": "latest",
     "@types/chart.js": "^2.9.41",
     "autoprefixer": "^10.4.20",
@@ -19,11 +21,15 @@
     "@tailwindcss/cli": "^4.0.8",
     "@types/alpinejs": "^3.13.11",
     "alpinejs": "^3.14.8",
+    "better-auth": "^1.1.19",
     "bun-plugin-tailwind": "^0.0.14",
     "chart.js": "^4.4.8",
-    "hono": "^4.7.2"
+    "hono": "^4.7.2",
+    "openai": "^4.85.3",
+    "mongodb": "^6.13.1"
   },
   "trustedDependencies": [
-    "@parcel/watcher"
+    "@parcel/watcher",
+    "@biomejs/biome"
   ]
 }

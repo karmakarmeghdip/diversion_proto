@@ -2,8 +2,9 @@
 
 import { Hono } from "hono";
 import { logger } from "hono/logger";
+import { auth } from "./auth"
 
-export const app = new Hono().use(logger()).get('/session', async (c) => {
+export const app = new Hono().use(logger()).on(["POST", "GET"], "/api/auth/**", (c) => auth.handler(c.req.raw)).get('/session', async (c) => {
   const r = await fetch("https://api.openai.com/v1/realtime/sessions", {
     method: "POST",
     headers: {
@@ -21,4 +22,4 @@ export const app = new Hono().use(logger()).get('/session', async (c) => {
   });
   const data = await r.json();
   return c.json(data);
-}).post('/auth/register')
+})
