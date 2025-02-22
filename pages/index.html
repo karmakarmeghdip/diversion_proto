@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/styles/tailwind.css">
     <script defer src="/node_modules/alpinejs/dist/cdn.js"></script>
     <style>
-        
+       
     </style>
 </head>
 <body x-data="{ darkMode: true }" :class="darkMode ? '' : 'light'" class="min-h-screen flex flex-col items-center justify-center p-8 font-mono theme-transition" style="background-color: var(--base); color: var(--text);">
@@ -31,7 +31,7 @@
             
             <div class="relative group">
                 <div class="w-10 h-10 rounded-full cursor-pointer theme-transition" style="background-color: var(--surface0); border: 2px solid var(--overlay0);">
-                    <img src="../assests//user.png" alt="User" class="w-full h-full rounded-full">
+                    <img src="/assests/user.png" alt="User" class="w-full h-full rounded-full">
                 </div>
                 <div class="absolute right-0 mt-2 w-48 rounded-lg hidden group-hover:block shadow-lg theme-transition" style="background-color: var(--mantle);">
                     <a href="#" class="block px-4 py-2 rounded-t-lg hover:text-mauve transition-colors" style="color: var(--text);">Profile</a>
@@ -43,11 +43,6 @@
 
     <!-- Spacing for navbar -->
     <div class="mt-24"></div>
-
-    <!-- Today's Date -->
-    <div id="date-display" class="text-lg font-semibold px-6 py-3 rounded-lg shadow-md mb-6 theme-transition" style="background-color: var(--surface0); color: var(--text);">
-        22ND FEBRUARY
-    </div>
 
     <!-- Demo Section -->
     <h1 class="text-2xl font-bold mb-8 px-8 py-4 rounded-xl shadow-lg tracking-wider text-center transition-all theme-transition" style="background-color: var(--surface0); color: var(--text);">

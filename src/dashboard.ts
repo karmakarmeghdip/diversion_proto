@@ -10,7 +10,7 @@ Chart.register(...registerables);
 
 interface DashboardData {
     activity: {
-        days: string[];
+        labels: string[];
         values: number[];
     };
     performance: {
@@ -19,6 +19,44 @@ interface DashboardData {
         palette: string[];
     };
 }
+
+const generateDashboardData = (
+    activityLabels: string[],
+    activityValues: number[],
+    performanceCategories: string[],
+    performanceStats: number[],
+    performancePalette: string[]
+): DashboardData => {
+    return {
+        activity: {
+            labels: activityLabels,
+            values: activityValues
+        },
+        performance: {
+            categories: performanceCategories,
+            stats: performanceStats,
+            palette: performancePalette
+        }
+    };
+};
+
+// Example monthly data
+const graphData = generateDashboardData(
+    [
+        'Jan 1', 'Jan 2', 'Jan 3', 'Jan 4', 'Jan 5', 'Jan 6', 'Jan 7',
+        'Jan 8', 'Jan 9', 'Jan 10', 'Jan 11', 'Jan 12', 'Jan 13', 'Jan 14',
+        'Jan 15', 'Jan 16', 'Jan 17', 'Jan 18', 'Jan 19', 'Jan 20', 'Jan 21',
+        'Jan 22', 'Jan 23', 'Jan 24', 'Jan 25', 'Jan 26', 'Jan 27', 'Jan 28',
+        'Jan 29', 'Jan 30', 'Jan 31'
+    ],
+    [
+        10, 15, 8, 12, 18, 25, 30, 28, 20, 22, 17, 19, 21, 24, 27, 
+        32, 35, 29, 26, 22, 20, 18, 15, 12, 10, 9, 14, 18, 22, 25, 28
+    ],
+    ['Productivity', 'Breaks', 'Focus', 'Distractions'],
+    [75, 20, 65, 35],
+    ['#E11D48', '#FACC15', '#22C55E', '#3B82F6']
+);
 
 const initializeChart = <T extends ChartType>(
     canvasId: string, 
@@ -39,22 +77,10 @@ const initializeChart = <T extends ChartType>(
     return new Chart<T>(ctx, config);
 };
 
-const graphData: DashboardData = {
-    activity: {
-        days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        values: [12, 19, 7, 14, 10, 22, 30]
-    },
-    performance: {
-        categories: ['Productivity', 'Breaks', 'Focus', 'Distractions'],
-        stats: [80, 15, 70, 30],
-        palette: ['#E11D48', '#FACC15', '#22C55E', '#3B82F6']
-    }
-};
-
 const activityChartConfig: ChartConfiguration<'line'> = {
     type: 'line',
     data: {
-        labels: graphData.activity.days,
+        labels: graphData.activity.labels,
         datasets: [{
             label: 'User Engagement',
             data: graphData.activity.values,
