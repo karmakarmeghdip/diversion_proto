@@ -27,11 +27,11 @@ const client = new OpenAI({
 /**
  * Analyzes a full conversation, extracting only user messages for emotion tracking.
  */
-async function analyzeConversation(conversation: Message[]): Promise<string> {
+export async function analyzeConversation(conversation: Message[]): Promise<string> {
     // Extract only user messages
     const userMessages = conversation
         .map(msg => msg.content);
-    
+
     // Construct the input dynamically for GPT
     const conversationText = userMessages
         .map(msg => `User: ${msg}`)
@@ -80,8 +80,8 @@ async function analyzeConversation(conversation: Message[]): Promise<string> {
 /**
  * Generates relevant follow-up questions based on the conversation and analysis.
  */
-async function generateFollowUpQuestions(
-    conversation: Message[], 
+export async function generateFollowUpQuestions(
+    conversation: Message[],
     analysis: string
 ): Promise<string[]> {
     const prompt = `
@@ -97,13 +97,13 @@ async function generateFollowUpQuestions(
     Focus on their emotional state and potential solutions to their concerns.
     Return only the questions, one per line.
     `;
-    
+
     const response = await client.chat.completions.create({
         model: "gpt-4",
         messages: [{ role: "user", content: prompt }],
         max_tokens: 500
     });
-    
+
     const content = response.choices[0].message.content || '';
     return content.split('\n').filter(q => q.trim());
 }
@@ -137,8 +137,6 @@ async function main() {
     }
 }
 
-// Export functions for use in other files
-export { analyzeConversation, generateFollowUpQuestions };
 
 // Run the main function if this file is executed directly
 if (require.main === module) {
