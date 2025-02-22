@@ -13,7 +13,7 @@ export async function init() {
 
   const audioEl = document.getElementById("source") as HTMLAudioElement || document.createElement("audio");
   audioEl.autoplay = true;
-  pc.ontrack = (e) => audioEl.srcObject = e.streams[0];
+  pc.ontrack = (e) => { audioEl.srcObject = e.streams[0]; }
 
   const ms = await navigator.mediaDevices.getUserMedia({ audio: true });
   pc.addTrack(ms.getTracks()[0]);
@@ -38,7 +38,7 @@ export async function init() {
   const answer: RTCSessionDescriptionInit = {
     type: "answer",
     sdp: await sdpResponse.text(),
-};
+  };
   await pc.setRemoteDescription(answer);
 }
 
@@ -53,8 +53,8 @@ function handleIncomingMessage(event: MessageEvent) {
   if (realtimeEvent.type === "response.audio_transcript.delta") {
     appendToChatBubble(realtimeEvent.delta);
   } else if (realtimeEvent.type === "response.done") {
-    const finalMessage = realtimeEvent.response?.output?.map((output: any) =>
-      output.content?.map((content: any) => content.transcript).join("")
+    const finalMessage = realtimeEvent.response?.output?.map((output: { content: { transcript: string; }[]; }) =>
+      output.content?.map((content: { transcript: string; }) => content.transcript).join("")
     ).join("");
     finalizeChatBubble(finalMessage || "");
   } else if (realtimeEvent.type === "conversation.item.input_audio_transcription.completed") {
@@ -92,20 +92,20 @@ function appendUserMessageBubble(fullMessage: string) {
  * Pauses audio transmission by disabling the local audio track.
  */
 export const pause = () => {
-  pc.getSenders().forEach(sender => {
+  for (const sender of pc.getSenders()) {
     if (sender.track) {
       sender.track.enabled = false;
     }
-  });
+  }
 }
 
 /**
  * Resumes audio transmission by enabling the local audio track.
  */
 export const play = () => {
-  pc.getSenders().forEach(sender => {
+  for (const sender of pc.getSenders()) {
     if (sender.track) {
       sender.track.enabled = true;
     }
-  });
+  }
 }
