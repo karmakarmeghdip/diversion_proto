@@ -18,7 +18,7 @@ const client = new OpenAI({
 /**
  * Generates a bullet-point summary of the conversation
  */
-async function generateSummary(conversation: Message[]): Promise<string> {
+export async function generateSummary(conversation: Message[]): Promise<string> {
     const conversationText = conversation
         .map(msg => `${msg.role}: ${msg.content}`)
         .join('\n');
@@ -71,8 +71,6 @@ async function main() {
     }
 }
 
-// Export functions for use in other files
-export { generateSummary };
 
 // Run the main function if this file is executed directly
 if (require.main === module) {

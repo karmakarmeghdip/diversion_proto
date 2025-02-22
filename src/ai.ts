@@ -128,11 +128,15 @@ export const play = () => {
 }
 
 
-export const done = () => {
+export const done = async () => {
   console.log(transcript);
-  client.session_finish.$post({
+  const res = await client.session_finish.$post({
     json: {
       transcript
     }
-  })
+  });
+  if (res.ok) {
+    window.location.href = "/dashboard";
+  }
+  console.log(res);
 }
