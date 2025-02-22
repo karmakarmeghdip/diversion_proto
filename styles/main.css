@@ -1,1 +1,32 @@
 @import "tailwindcss";
+/* Catppuccin Mocha (Dark Mode) */
+.dark {
+    --base: #1e1e2e;
+    --crust: #11111b;
+    --mantle: #181825;
+    --surface0: #313244;
+    --surface1: #45475a;
+    --text: #cdd6f4;
+    --mauve: #cba6f7;
+    --blue: #89b4fa;
+    --yellow: #f9e2af;
+    --overlay0: #6c7086;
+}
+
+/* Catppuccin Frappe (Light Mode) */
+.light {
+    --base: #eff1f5;
+    --crust: #dce0e8;
+    --mantle: #e6e9ef;
+    --surface0: #ccd0da;
+    --surface1: #bcc0cc;
+    --text: #4c4f69;
+    --mauve: #8839ef;
+    --blue: #1e66f5;
+    --yellow: #df8e1d;
+    --overlay0: #9ca0b0;
+}
+
+.theme-transition {
+    transition: all 0.3s ease;
+}

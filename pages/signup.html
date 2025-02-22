@@ -1,164 +1,123 @@
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="en" x-data="{ darkMode: true }" :class="darkMode ? '' : 'light'">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>yourmind.space</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cooper+Hewitt:wght@400;500;600&display=swap" rel="stylesheet">
-    <title>Login/Signup Form</title>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
-        /* Fixed animations and transitions */
-        .container.active .sign-in {
-            transform: translateX(100%);
-        }
-        .container.active .sign-up {
-            transform: translateX(100%);
-            opacity: 1;
-            z-index: 5;
-            animation: move 0.6s;
-        }
-        @keyframes move {
-            0%, 49.99% {
-                opacity: 0;
-                z-index: 1;
-            }
-            50%, 100% {
-                opacity: 1;
-                z-index: 5;
-            }
-        }
-        .container.active .toggle-container {
-            transform: translateX(-100%);
-            border-radius: 0 150px 100px 0;
-        }
-        .container.active .toggle {
-            transform: translateX(50%);
-        }
-        .container.active .toggle-left {
-            transform: translateX(0);
-        }
-        .container.active .toggle-right {
-            transform: translateX(200%);
+        :root {
+            --base: #24273a;
+            --crust: #181926;
+            --mantle: #1e2030;
+            --surface0: #363a4f;
+            --surface1: #494d64;
+            --text: #cad3f5;
+            --mauve: #c6a0f6;
+            --blue: #8aadf4;
+            --yellow: #eed49f;
+            --overlay0: #6e738d;
+            --red: #ed8796;
         }
 
-        /* Dark mode fixes */
-        .dark {
-            /* background: #111827 !important; */
-        }
-        
-        .dark .container {
-            /* background-color: rgba(0, 0, 0, 0.7); */
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px 0 rgba(78, 0, 146, 0.3);
-            border: 1px solid rgba(147, 51, 234, 0.1);
-        }
-        
-        .dark .form-container form {
-            background-color: transparent;
-        }
-        
-        .dark h1 {
-            /* background: linear-gradient(45deg, #9333ea, #7c3aed); */
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .dark span {
-            /* color: #c4b5fd; */
-        }
-        
-        .dark input {
-            /* background-color: rgba(0, 0, 0, 0.5) !important; */
-            border: 1px solid rgba(147, 51, 234, 0.2) !important;
-            /* color: #e2e8f0 !important; */
-        }
-        
-        .dark input:focus {
-            /* background-color: rgba(0, 0, 0, 0.7) !important; */
-            border-color: #9333ea !important;
-        }
-        
-        .dark input::placeholder {
-            /* color: #a78bfa !important; */
-        }
-        
-        /* Font replacement */
-        .dark * {
-            font-family: 'Cooper Hewitt', sans-serif !important;
+        .theme-transition {
+            transition: all 0.3s ease;
         }
 
-        /* Fixed button transitions */
-        button {
-            transition: all 0.3s ease !important;
+        .light {
+            --base: #eff1f5;
+            --crust: #dce0e8;
+            --mantle: #e6e9ef;
+            --surface0: #ccd0da;
+            --surface1: #bcc0cc;
+            --text: #4c4f69;
+            --mauve: #8839ef;
+            --blue: #1e66f5;
+            --yellow: #df8e1d;
+            --overlay0: #9ca0b0;
+            --red: #d20f39;
+        }
+
+        .auth-button {
+            background-color: var(--surface0);
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .auth-button:hover {
+            background-color: var(--mauve);
+            color: var(--base);
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-to-r from-[#e2e2e2] to-[#c9d6ff] flex items-center justify-center transition-all duration-300">
-    <!-- Theme Toggle Button -->
-    <button onclick="toggleTheme()" class="theme-toggle fixed top-4 right-4 p-3 rounded-full bg-white shadow-lg">
-        <i class="fas fa-moon text-gray-600"></i>
-        <i class="fas fa-sun hidden text-purple-400"></i>
-    </button>
-
-    <div class="container bg-white rounded-[30px] shadow-lg relative overflow-hidden w-[768px] max-w-full min-h-[480px]" id="container">
-        <!-- Sign Up Form -->
-        <div class="form-container sign-up absolute top-0 h-full transition-all duration-600 left-0 w-1/2 opacity-0 z-10">
-            <form class="h-full flex flex-col items-center justify-center px-10">
-                <h1 class="text-[#163076] text-xl font-semibold">Create Account</h1>
-                <span class="text-sm mt-4 text-gray-600">Enter your details to Register</span>
-                <input type="text" placeholder="Name" class="w-full bg-gray-100 rounded-lg p-3 my-2 text-sm outline-none">
-                <input type="email" placeholder="Email" class="w-full bg-gray-100 rounded-lg p-3 my-2 text-sm outline-none">
-                <input type="password" placeholder="Password" class="w-full bg-gray-100 rounded-lg p-3 my-2 text-sm outline-none">
-                <button class="bg-[#163076] text-white text-xs font-semibold py-3 px-11 rounded-lg mt-4 uppercase tracking-wider">Sign Up</button>
-            </form>
-        </div>
-
-        <!-- Sign In Form -->
-        <div class="form-container sign-in absolute top-0 h-full transition-all duration-600 left-0 w-1/2 z-20">
-            <form class="h-full flex flex-col items-center justify-center px-10">
-                <h1 class="text-[#317d6c] text-xl font-semibold">Sign in!</h1>
-                <span class="text-sm mt-8 text-gray-600">Use your email & password</span>
-                <input type="email" placeholder="Email" class="w-full bg-gray-100 rounded-lg p-3 my-2 text-sm outline-none">
-                <input type="password" placeholder="Password" class="w-full bg-gray-100 rounded-lg p-3 my-2 text-sm outline-none">
-                <a href="#" class="text-[#317d6c] text-sm my-4">Forgot Your Password?</a>
-                <button class="bg-[#317d6c] text-white text-xs font-semibold py-3 px-11 rounded-lg uppercase tracking-wider">Sign In</button>
-            </form>
-        </div>
-
-        <!-- Toggle Container -->
-        <div class="toggle-container absolute top-0 left-1/2 w-1/2 h-full overflow-hidden transition-all duration-600 rounded-l-[150px] rounded-bl-[100px] z-[1000]">
-            <div class="toggle bg-gradient-to-r from-[#6b84c7] to-[#4eac96] relative h-full w-[200%] -left-full transition-all duration-600">
-                <!-- Left Panel -->
-                <div class="toggle-panel toggle-left absolute w-1/2 h-full flex flex-col items-center justify-center px-8 text-center -translate-x-[200%] transition-all duration-600">
-                    <h1 class="text-white text-xl font-semibold mb-4">Welcome Back!</h1>
-                    <button class="bg-white/20 backdrop-blur-sm text-white text-xs font-semibold py-3 px-11 rounded-lg mt-4 uppercase tracking-wider" onclick="toggleForm()">Sign In</button>
+<body x-data class="min-h-screen flex flex-col items-center justify-center p-8 font-mono theme-transition" style="background-color: var(--base); color: var(--text);">
+    <!-- Navbar -->
+    <nav class="w-full shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50 theme-transition" style="background-color: var(--crust);">
+        <h1 class="text-2xl font-bold tracking-wider" style="color: var(--mauve);">yourmind.space</h1>
+        
+        <div class="flex items-center space-x-6">
+            <!-- Theme Toggle -->
+            <button @click="darkMode = !darkMode" class="p-2 rounded-lg theme-transition" :style="darkMode ? 'background-color: var(--surface0)' : 'background-color: var(--surface1)'">
+                <svg x-show="darkMode" class="w-6 h-6" style="color: var(--yellow);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                <svg x-show="!darkMode" class="w-6 h-6" style="color: var(--blue);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                </svg>
+            </button>
+            
+            <div class="relative group">
+                <div class="w-10 h-10 rounded-full cursor-pointer theme-transition" style="background-color: var(--surface0); border: 2px solid var(--overlay0);">
+                    <img src="/assests/user.png" alt="User" class="w-full h-full rounded-full">
                 </div>
-
-                <!-- Right Panel -->
-                <div class="toggle-panel toggle-right absolute right-0 w-1/2 h-full flex flex-col items-center justify-center px-8 text-center transition-all duration-600">
-                    <h1 class="text-white text-xl font-semibold mb-4">New Here?</h1>
-                    <button class="bg-white/20 backdrop-blur-sm text-white text-xs font-semibold py-3 px-11 rounded-lg mt-4 uppercase tracking-wider" onclick="toggleForm()">Sign Up</button>
+                <div class="absolute right-0 mt-2 w-48 rounded-lg hidden group-hover:block shadow-lg theme-transition" style="background-color: var(--mantle);">
+                    <a href="#" class="block px-4 py-2 rounded-t-lg hover:text-mauve transition-colors" style="color: var(--text);">Profile</a>
+                    <a href="#" class="block px-4 py-2 rounded-b-lg hover:text-mauve transition-colors" style="color: var(--text);">Logout</a>
                 </div>
             </div>
         </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="flex flex-col items-center justify-center max-w-4xl w-full mt-20 space-y-12">
+        <!-- Hero Section -->
+        <div class="flex flex-col md:flex-row items-center justify-between w-full gap-8">
+            <div class="flex-1 space-y-6">
+                <h2 class="text-4xl font-bold" style="color: var(--mauve);">Transform Your Learning Journey</h2>
+                <p class="text-lg" style="color: var(--text);">The best way to learn any topic. Start cramming right away with our innovative learning platform!</p>
+            </div>
+            <div class="flex-1 flex justify-center">
+                <img src="/assests/yourmind.space.png" alt="yourmind.space" class="w-80 h-80 object-contain">
+            </div>
+        </div>
+
+        <!-- Auth Buttons -->
+        <div class="w-full max-w-md space-y-4 p-6 rounded-xl shadow-lg theme-transition" style="background-color: var(--surface0);">
+            <div class="text-center mb-6">
+                <h3 class="text-2xl font-bold mb-2" style="color: var(--text);">Get Started Now</h3>
+                <!-- <p class="text-sm" style="color: var(--overlay0);">Choose your preferred way to sign in</p> -->
+            </div>
+            
+            <!-- <button class="auth-button w-full py-3 px-4 rounded-lg flex items-center justify-center space-x-3 mb-4">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span>Continue with GitHub</span>
+            </button> -->
+            
+            <button class="auth-button w-full py-3 px-4 rounded-lg flex items-center justify-center space-x-3">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032s2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12s4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
+                </svg>
+                <span>Continue with Google</span>
+            </button>
+        </div>
     </div>
 
-    <script>
-        function toggleForm() {
-            const container = document.getElementById('container');
-            container.classList.toggle('active');
-
-        }
-
-        function toggleTheme() {
-            document.body.classList.toggle('dark');
-            const moon = document.querySelector('.fa-moon');
-            const sun = document.querySelector('.fa-sun');
-            moon.classList.toggle('hidden');
-            sun.classList.toggle('hidden');
-        }
-    </script>
+    <!-- Footer -->
+    <footer class="w-full text-center mt-12" style="color: var(--overlay0);">
+        <p>© 2024 yourmind.space. All rights reserved.</p>
+    </footer>
 </body>
-
 </html>
