@@ -1,17 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" x-data="{ darkMode: true }" :class="darkMode ? '' : 'light'">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diversion Prototype</title>
-    <link rel="stylesheet" href="/styles/tailwind.css">
-    <script defer src="/node_modules/alpinejs/dist/cdn.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
-       
+        :root {
+            --base: #24273a;
+            --crust: #181926;
+            --mantle: #1e2030;
+            --surface0: #363a4f;
+            --surface1: #494d64;
+            --text: #cad3f5;
+            --mauve: #c6a0f6;
+            --blue: #8aadf4;
+            --yellow: #eed49f;
+            --overlay0: #6e738d;
+            --red: #ed8796;
+        }
+
+        .theme-transition {
+            transition: all 0.3s ease;
+        }
+
+        .light {
+            --base: #eff1f5;
+            --crust: #dce0e8;
+            --mantle: #e6e9ef;
+            --surface0: #ccd0da;
+            --surface1: #bcc0cc;
+            --text: #4c4f69;
+            --mauve: #8839ef;
+            --blue: #1e66f5;
+            --yellow: #df8e1d;
+            --overlay0: #9ca0b0;
+            --red: #d20f39;
+        }
+
+        @keyframes mic-wave {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.2); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 0.8; }
+        }
+
+        .mic-active {
+            animation: mic-wave 1.5s infinite;
+        }
     </style>
 </head>
 <body x-data="{ darkMode: true }" :class="darkMode ? '' : 'light'" class="min-h-screen flex flex-col items-center justify-center p-8 font-mono theme-transition" style="background-color: var(--base); color: var(--text);">
-    <!-- Navbar -->
+    <!-- Navbar section remains the same -->
     <nav class="w-full shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50 theme-transition" style="background-color: var(--crust);">
         <h1 class="text-2xl font-bold tracking-wider" style="color: var(--mauve);">El Psy Congru</h1>
         
@@ -62,25 +102,89 @@
     </div>
 
     <!-- Controls -->
-    <div id="app" x-data="{ playing: true }" class="flex gap-6 mt-8">
+    <div id="app" x-data="{ muted: false }" class="flex justify-center items-center gap-6 mt-8 w-full">
+        <!-- Mic Button (Now on the left) -->
         <button 
-            id="play"
-            x-show="!playing"
-            @click="playing = true"
-            class="px-8 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none theme-transition"
-            style="background-color: var(--mauve); color: var(--base);"
+            @click="muted = !muted"
+            class="p-3 rounded-full shadow-lg hover:shadow-xl focus:outline-none theme-transition"
+            :class="{ 'mic-active': !muted }"
+            :style="muted ? 'background-color: var(--red); color: var(--base);' : 'background-color: var(--surface0); color: var(--text);'"
         >
-            Play
+            <!-- Microphone Icon (Unmuted) -->
+            <svg 
+                class="w-6 h-6" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                x-show="!muted"
+            >
+                <path 
+                    stroke-linecap="round" 
+                    stroke-linejoin="round" 
+                    stroke-width="2" 
+                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
+                />
+            </svg>
+            <!-- Muted Microphone Icon -->
+            <svg 
+                class="w-6 h-6" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                x-show="muted"
+            >
+                <path 
+                    stroke-linecap="round" 
+                    stroke-linejoin="round" 
+                    stroke-width="2" 
+                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
+                />
+                <line 
+                    x1="5" 
+                    y1="5" 
+                    x2="19" 
+                    y2="19" 
+                    stroke="currentColor" 
+                    stroke-width="2" 
+                    stroke-linecap="round"
+                />
+            </svg>
         </button>
+
+        <!-- Done Button -->
         <button 
-            id="pause"
-            x-show="playing"
-            @click="playing = false"
-            class="px-8 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none theme-transition"
+            class="px-8 py-3 rounded-full shadow-lg hover:shadow-xl focus:outline-none"
             style="background-color: var(--mauve); color: var(--base);"
         >
-            Pause
+            Done
         </button>
     </div>
+
+    <script>
+        // Basic audio visualization setup
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('visualisation');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            function resizeCanvas() {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // Basic animation (placeholder)
+            function draw() {
+                ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--surface0');
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                requestAnimationFrame(draw);
+            }
+            
+            draw();
+        });
+    </script>
 </body>
 </html>
