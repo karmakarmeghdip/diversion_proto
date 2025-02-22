@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combined Navigation and Summary Cards</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for dark mode */
+        .dark {
+            background-color: #1a1a1a;
+            color: #d1d5db;
+        }
+        .dark .card {
+            background-color: #2d3748;
+            color: #d1d5db;
+        }
+        .dark .card h3 {
+            color: #d1d5db;
+        }
+        .dark .card ul li {
+            color: #d1d5db;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation Bar -->
+    <nav class="w-full bg-gray-950 shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50">
+        <h1 class="text-2xl font-bold text-indigo-400 tracking-wider">El Psy Congru</h1>
+        <div class="flex space-x-6 items-center">
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle" class="text-gray-300 hover:text-indigo-400 transition-all duration-300">
+                <span id="theme-icon">🌙</span> <!-- Moon icon by default -->
+            </button>
+            <button class="text-gray-300 hover:text-indigo-400 transition-all duration-300">
+                Login
+            </button>
+            <button class="text-gray-300 hover:text-indigo-400 transition-all duration-300">
+                Signup
+            </button>
+            <div class="relative group">
+                <img src="/assests/user.png" alt="User" class="w-10 h-10 rounded-full border-2 border-gray-400 cursor-pointer hover:border-indigo-400 transition-colors">
+                <div class="absolute right-0 mt-2 w-48 bg-gray-800 shadow-lg rounded-lg hidden group-hover:block">
+                    <a href="#" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-indigo-400 rounded-t-lg transition-colors">Profile</a>
+                    <a href="#" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-indigo-400 rounded-b-lg transition-colors">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Spacing for Navbar -->
+    <div class="mt-24"></div>
+
+    <!-- Card Container -->
+    <div class="card-container p-6 flex flex-wrap gap-6 justify-center" id="card-container">
+        <!-- Cards will be dynamically generated here -->
+    </div>
+
+    <script>
+        // Function to format date as "21st Oct 2023"
+        const formatDate = (dateString) => {
+            const date = new Date(dateString);
+            const day = date.getDate();
+            const month = date.toLocaleString('default', { month: 'short' });
+            const year = date.getFullYear();
+            const daySuffix = (day === 1 || day === 21 || day === 31) ? 'st' :
+                             (day === 2 || day === 22) ? 'nd' :
+                             (day === 3 || day === 23) ? 'rd' : 'th';
+            return `${day}${daySuffix} ${month} ${year}`;
+        };
+
+        // Hardcoded dates and arbitrary summary points
+        const summaries = [
+            { 
+                date: "2023-10-01", 
+                summary: [
+                    "Discussed project timelines and deliverables.",
+                    "Reviewed design mockups and provided feedback.",
+                    "Brainstormed ideas for the new marketing campaign.",
+                    "Finalized the budget for Q4."
+                ]
+            },
+            { 
+                date: "2023-10-02", 
+                summary: [
+                    "Prepared for the client presentation.",
+                    "Conducted team training on new software."
+                ]
+            },
+            { 
+                date: "2023-10-03", 
+                summary: [
+                    "Wrapped up the week with a team meeting.",
+                    "Discussed project timelines and deliverables.",
+                    "Reviewed design mockups and provided feedback.",
+                    "Brainstormed ideas for the new marketing campaign.",
+                    "Finalized the budget for Q4."
+                ]
+            },
+            { 
+                date: "2023-10-04", 
+                summary: [
+                    "Prepared for the client presentation.",
+                    "Conducted team training on new software.",
+                    "Wrapped up the week with a team meeting."
+                ]
+            },
+            { 
+                date: "2023-10-05", 
+                summary: [
+                    "Discussed project timelines and deliverables.",
+                    "Reviewed design mockups and provided feedback."
+                ]
+            },
+            { 
+                date: "2023-10-06", 
+                summary: [
+                    "Brainstormed ideas for the new marketing campaign.",
+                    "Finalized the budget for Q4.",
+                    "Prepared for the client presentation.",
+                    "Conducted team training on new software."
+                ]
+            },
+            { 
+                date: "2023-10-07", 
+                summary: [
+                    "Wrapped up the week with a team meeting."
+                ]
+            }
+        ];
+
+        const cardContainer = document.getElementById("card-container");
+
+        // Generate cards dynamically
+        summaries.forEach(day => {
+            const card = document.createElement("div");
+            card.classList.add("card", "bg-white", "rounded-lg", "shadow-md", "p-6", "w-80", "transition-transform", "hover:transform", "hover:-translate-y-2");
+
+            const dateHeading = document.createElement("h3");
+            dateHeading.classList.add("text-lg", "font-semibold", "text-gray-800", "mb-4");
+            dateHeading.textContent = formatDate(day.date); // Format the date
+
+            const summaryList = document.createElement("ul");
+            summaryList.classList.add("list-disc", "pl-6", "space-y-2");
+            day.summary.forEach(point => {
+                const listItem = document.createElement("li");
+                listItem.classList.add("text-sm", "text-gray-600");
+                listItem.textContent = point;
+                summaryList.appendChild(listItem);
+            });
+
+            card.appendChild(dateHeading);
+            card.appendChild(summaryList);
+            cardContainer.appendChild(card);
+        });
+
+        // Theme Toggle Logic
+        const themeToggle = document.getElementById("theme-toggle");
+        const themeIcon = document.getElementById("theme-icon");
+        const body = document.body;
+
+        themeToggle.addEventListener("click", () => {
+            body.classList.toggle("dark");
+            if (body.classList.contains("dark")) {
+                themeIcon.textContent = "☀️"; // Sun icon for light mode
+            } else {
+                themeIcon.textContent = "🌙"; // Moon icon for dark mode
+            }
+        });
+    </script>
+</body>
+</html>

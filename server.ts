@@ -1,6 +1,9 @@
 import index from './pages/index.html';
 import dashboard from './pages/dashboard.html';
 import signup from './pages/signup.html';
+import profilepage from './pages/profile.html';
+import summarypage from './pages/summary.html';
+
 import { app } from './src/api';
 
 if (!process.env.OPENAI_API_KEY) {
@@ -12,7 +15,9 @@ Bun.serve({
   static: {
     '/': index,
     '/dashboard': dashboard,
-    '/signup': signup
+    '/signup': signup,
+    '/profile': profilepage,
+    '/summary': summarypage
   },
   development: true,
   fetch: app.fetch
