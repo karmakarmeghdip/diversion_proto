@@ -5,44 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Combined Navigation and Summary Cards</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="/styles/tailwind.css">
     <style>
-        /* Custom styles for dark mode */
+        /* Catppuccin Mocha (Dark Mode) */
         .dark {
-            background-color: #1a1a1a;
-            color: #d1d5db;
+            --base: #1e1e2e;
+            --crust: #11111b;
+            --mantle: #181825;
+            --surface0: #313244;
+            --surface1: #45475a;
+            --text: #cdd6f4;
+            --mauve: #cba6f7;
+            --blue: #89b4fa;
+            --yellow: #f9e2af;
+            --overlay0: #6c7086;
         }
-        .dark .card {
-            background-color: #2d3748;
-            color: #d1d5db;
+
+        /* Catppuccin Frappe (Light Mode) */
+        .light {
+            --base: #eff1f5;
+            --crust: #dce0e8;
+            --mantle: #e6e9ef;
+            --surface0: #ccd0da;
+            --surface1: #bcc0cc;
+            --text: #4c4f69;
+            --mauve: #8839ef;
+            --blue: #1e66f5;
+            --yellow: #df8e1d;
+            --overlay0: #9ca0b0;
         }
-        .dark .card h3 {
-            color: #d1d5db;
-        }
-        .dark .card ul li {
-            color: #d1d5db;
+
+        .theme-transition {
+            transition: all 0.3s ease;
         }
     </style>
 </head>
-<body class="bg-gray-100">
-    <!-- Navigation Bar -->
-    <nav class="w-full bg-gray-950 shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50">
-        <h1 class="text-2xl font-bold text-indigo-400 tracking-wider">El Psy Congru</h1>
-        <div class="flex space-x-6 items-center">
-            <!-- Theme Toggle Button -->
-            <button id="theme-toggle" class="text-gray-300 hover:text-indigo-400 transition-all duration-300">
-                <span id="theme-icon">🌙</span> <!-- Moon icon by default -->
+<body x-data="{ darkMode: false }" class="min-h-screen flex flex-col items-center justify-center p-8 font-mono theme-transition" :class="{ 'dark': darkMode, 'light': !darkMode }" style="background-color: var(--base); color: var(--text);">
+    <!-- Navbar -->
+    <nav class="w-full shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50 theme-transition" style="background-color: var(--crust);">
+        <h1 class="text-2xl font-bold tracking-wider" style="color: var(--mauve);">El Psy Congru</h1>
+        
+        <div class="flex items-center space-x-6">
+            <!-- Theme Toggle -->
+            <button @click="darkMode = !darkMode" class="p-2 rounded-lg theme-transition" :style="darkMode ? 'background-color: var(--surface0)' : 'background-color: var(--surface1)'">
+                <svg x-show="darkMode" class="w-6 h-6" style="color: var(--yellow);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                <svg x-show="!darkMode" class="w-6 h-6" style="color: var(--blue);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                </svg>
             </button>
-            <button class="text-gray-300 hover:text-indigo-400 transition-all duration-300">
-                Login
-            </button>
-            <button class="text-gray-300 hover:text-indigo-400 transition-all duration-300">
-                Signup
-            </button>
+            
+            <button class="hover:text-mauve transition-all duration-300" style="color: var(--text);">Login</button>
+            <button class="hover:text-mauve transition-all duration-300" style="color: var(--text);">Signup</button>
+            
             <div class="relative group">
-                <img src="/assests/user.png" alt="User" class="w-10 h-10 rounded-full border-2 border-gray-400 cursor-pointer hover:border-indigo-400 transition-colors">
-                <div class="absolute right-0 mt-2 w-48 bg-gray-800 shadow-lg rounded-lg hidden group-hover:block">
-                    <a href="#" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-indigo-400 rounded-t-lg transition-colors">Profile</a>
-                    <a href="#" class="block px-4 py-2 text-gray-300 hover:bg-gray-700 hover:text-indigo-400 rounded-b-lg transition-colors">Logout</a>
+                <div class="w-10 h-10 rounded-full cursor-pointer theme-transition" style="background-color: var(--surface0); border: 2px solid var(--overlay0);">
+                    <img src="https://via.placeholder.com/40" alt="User" class="w-full h-full rounded-full">
+                </div>
+                <div class="absolute right-0 mt-2 w-48 rounded-lg hidden group-hover:block shadow-lg theme-transition" style="background-color: var(--mantle);">
+                    <a href="#" class="block px-4 py-2 rounded-t-lg hover:text-mauve transition-colors" style="color: var(--text);">Profile</a>
+                    <a href="#" class="block px-4 py-2 rounded-b-lg hover:text-mauve transition-colors" style="color: var(--text);">Logout</a>
                 </div>
             </div>
         </div>
@@ -134,17 +158,21 @@
         // Generate cards dynamically
         summaries.forEach(day => {
             const card = document.createElement("div");
-            card.classList.add("card", "bg-white", "rounded-lg", "shadow-md", "p-6", "w-80", "transition-transform", "hover:transform", "hover:-translate-y-2");
+            card.classList.add("card", "rounded-lg", "shadow-md", "p-6", "w-80", "transition-transform", "hover:transform", "hover:-translate-y-2", "theme-transition");
+            card.style.backgroundColor = "var(--surface0)";
+            card.style.color = "var(--text)";
 
             const dateHeading = document.createElement("h3");
-            dateHeading.classList.add("text-lg", "font-semibold", "text-gray-800", "mb-4");
+            dateHeading.classList.add("text-lg", "font-semibold", "mb-4");
+            dateHeading.style.color = "var(--text)";
             dateHeading.textContent = formatDate(day.date); // Format the date
 
             const summaryList = document.createElement("ul");
             summaryList.classList.add("list-disc", "pl-6", "space-y-2");
             day.summary.forEach(point => {
                 const listItem = document.createElement("li");
-                listItem.classList.add("text-sm", "text-gray-600");
+                listItem.classList.add("text-sm");
+                listItem.style.color = "var(--text)";
                 listItem.textContent = point;
                 summaryList.appendChild(listItem);
             });
@@ -152,20 +180,6 @@
             card.appendChild(dateHeading);
             card.appendChild(summaryList);
             cardContainer.appendChild(card);
-        });
-
-        // Theme Toggle Logic
-        const themeToggle = document.getElementById("theme-toggle");
-        const themeIcon = document.getElementById("theme-icon");
-        const body = document.body;
-
-        themeToggle.addEventListener("click", () => {
-            body.classList.toggle("dark");
-            if (body.classList.contains("dark")) {
-                themeIcon.textContent = "☀️"; // Sun icon for light mode
-            } else {
-                themeIcon.textContent = "🌙"; // Moon icon for dark mode
-            }
         });
     </script>
 </body>
