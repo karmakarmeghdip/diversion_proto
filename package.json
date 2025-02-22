@@ -3,13 +3,14 @@
   "module": "server.ts",
   "type": "module",
   "scripts": {
-    "css": "npx @tailwindcss/cli -i ./styles/main.css -o ./styles/tailwind.css --watch",
+    "css": "@tailwindcss/cli -i ./styles/main.css -o ./styles/tailwind.css --watch",
     "dev": "bun run server.ts"
   },
   "devDependencies": {
-    "@catppuccin/tailwindcss": "^0.1.6",
     "@better-auth/cli": "^1.1.19",
     "@biomejs/biome": "1.9.4",
+    "@catppuccin/tailwindcss": "^0.1.6",
+    "@tailwindcss/cli": "^4.0.8",
     "@types/bun": "latest",
     "@types/chart.js": "^2.9.41",
     "autoprefixer": "^10.4.20",
@@ -18,7 +19,6 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "@hono/zod-validator": "^0.4.3",
     "@tailwindcss/cli": "^4.0.8",
     "@types/alpinejs": "^3.13.11",
     "alpinejs": "^3.14.8",
@@ -31,7 +31,11 @@
     "zod": "^3.24.2"
   },
   "trustedDependencies": [
+    "@biomejs/biome",
     "@parcel/watcher",
-    "@biomejs/biome"
+    "@prisma/client",
+    "@prisma/engines",
+    "better-sqlite3",
+    "prisma"
   ]
 }
