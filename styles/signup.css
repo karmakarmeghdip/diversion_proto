@@ -6,8 +6,8 @@
     font-family: 'Montserrat', sans-serif;
 }
 body{
-    background-color: #c9d6ff;
-    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    /* background-color: #c9d6ff; */
+    /* background: linear-gradient(to right, #e2e2e2, #c9d6ff); */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,7 +15,7 @@ body{
     height: 100vh;
 }
 .container{
-    background-color: #fff;
+    /* background-color: #fff; */
     border-radius: 30px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
     position: relative;
@@ -35,14 +35,14 @@ body{
     font-size: 12px;
 }
 .container a{
-    color: #333;
+    /* color: #333; */
     font-size: 13px;
     text-decoration: none;
     margin: 15px 0 10px;
 }
 .container button{
-    background-color: #317d6c;
-    color: #fff;
+    /* background-color: #317d6c; */
+    /* color: #fff; */
     font-size: 12px;
     padding: 10px 45px;
     border: 1px solid transparent;
@@ -55,14 +55,14 @@ body{
 
 }
 #bb{
-    background-color: #163076;
+    /* background-color: #163076; */
 }
 .container button.hidden{
     background-color: transparent;
-    border-color: #f7f2f2;
+    /* border-color: #f7f2f2; */
 }
 .container form{
-    background-color: #fff;
+    /* background-color: #fff; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -71,7 +71,7 @@ body{
     height: 100%;
 }
 .container input{
-    background-color: #dcf8f2;
+    /* background-color: #dcf8f2; */
     border: none;
     margin: 8px 0;
     padding: 10px 15px;
@@ -145,10 +145,10 @@ body{
     border-radius: 0 150px 100px 0;
 }
 .toggle{
-    background-color: #78ebd0;
+    /* background-color: #78ebd0; */
     height: 100%;
     background: linear-gradient(to right, #6b84c7, #4eac96);
-    color: #fff;
+    /* color: #fff; */
     position: relative;
     left: -100%;
     height: 100%;
@@ -174,13 +174,13 @@ body{
     transition: all 0.6s ease-in-out;
 }
 #fir{
-    color: #0e5043;
+    /* color: #0e5043; */
 }
 #sec{
-    color: #163076;
+    /* color: #163076; */
 }
 #ff{
-    color: #0e5043;
+    /* color: #0e5043; */
 }
 
 .toggle-left{
@@ -205,12 +205,12 @@ body{
     z-index: -1;
 }
 #register{
- background-color: #0e5043;
+ /* background-color: #0e5043; */
  border: #317d6c;
 }
 #login{
-    background-color: #1d377d;
+    /* background-color: #1d377d; */
 }
 #first{
-    color: #0e5043;
+    /* color: #0e5043; */
 }
