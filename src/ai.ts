@@ -1,6 +1,14 @@
+import { client } from './honoClient';
+
 let pc: RTCPeerConnection;
 let currentChatBubble: HTMLElement | null = null;
 
+const transcript: {
+  role: "user" | "assistant";
+  content: string;
+}[] = [];
+
+const audioEl = document.getElementById("source") as HTMLAudioElement || document.createElement("audio");
 /**
  * Initializes the WebRTC connection and sets up event listeners.
  */
@@ -11,7 +19,6 @@ export async function init() {
 
   pc = new RTCPeerConnection();
 
-  const audioEl = document.getElementById("source") as HTMLAudioElement || document.createElement("audio");
   audioEl.autoplay = true;
   pc.ontrack = (e) => { audioEl.srcObject = e.streams[0]; }
 
@@ -78,6 +85,10 @@ function appendToChatBubble(delta: string) {
  * Finalizes the current chat bubble with the complete message.
  */
 function finalizeChatBubble(finalMessage: string) {
+  transcript.push({
+    role: 'assistant',
+    content: finalMessage
+  });
   if (currentChatBubble) {
     currentChatBubble.innerText = finalMessage;
     currentChatBubble = null;
@@ -85,6 +96,10 @@ function finalizeChatBubble(finalMessage: string) {
 }
 
 function appendUserMessageBubble(fullMessage: string) {
+  transcript.push({
+    role: 'user',
+    content: fullMessage
+  })
   console.log(fullMessage);
 }
 
@@ -92,6 +107,7 @@ function appendUserMessageBubble(fullMessage: string) {
  * Pauses audio transmission by disabling the local audio track.
  */
 export const pause = () => {
+  audioEl.pause()
   for (const sender of pc.getSenders()) {
     if (sender.track) {
       sender.track.enabled = false;
@@ -103,9 +119,20 @@ export const pause = () => {
  * Resumes audio transmission by enabling the local audio track.
  */
 export const play = () => {
+  audioEl.play()
   for (const sender of pc.getSenders()) {
     if (sender.track) {
       sender.track.enabled = true;
     }
   }
+}
+
+
+export const done = () => {
+  console.log(transcript);
+  client.session_finish.$post({
+    json: {
+      transcript
+    }
+  })
 }
