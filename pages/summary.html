@@ -44,7 +44,7 @@
 <body x-data="{ darkMode: false }" class="min-h-screen flex flex-col items-center justify-center p-8 font-mono theme-transition" :class="{ 'dark': darkMode, 'light': !darkMode }" style="background-color: var(--base); color: var(--text);">
     <!-- Navbar -->
     <nav class="w-full shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50 theme-transition" style="background-color: var(--crust);">
-        <h1 class="text-2xl font-bold tracking-wider" style="color: var(--mauve);">El Psy Congru</h1>
+        <h1 class="text-2xl font-bold tracking-wider" style="color: var(--mauve);">yourmind.space</h1>
         
         <div class="flex items-center space-x-6">
             <!-- Theme Toggle -->
@@ -162,14 +162,18 @@
             card.style.backgroundColor = "var(--surface0)";
             card.style.color = "var(--text)";
 
+            // Date Heading (Top-Left Corner)
             const dateHeading = document.createElement("h3");
             dateHeading.classList.add("text-lg", "font-semibold", "mb-4");
             dateHeading.style.color = "var(--text)";
             dateHeading.textContent = formatDate(day.date); // Format the date
 
+            // Summary List
             const summaryList = document.createElement("ul");
             summaryList.classList.add("list-disc", "pl-6", "space-y-2");
-            day.summary.forEach(point => {
+
+            // Show only the first 3 summary points initially
+            day.summary.slice(0, 3).forEach(point => {
                 const listItem = document.createElement("li");
                 listItem.classList.add("text-sm");
                 listItem.style.color = "var(--text)";
@@ -177,8 +181,37 @@
                 summaryList.appendChild(listItem);
             });
 
-            card.appendChild(dateHeading);
-            card.appendChild(summaryList);
+            // Add "Read more" button if there are more than 3 points
+            if (day.summary.length > 3) {
+                const readMoreButton = document.createElement("button");
+                readMoreButton.classList.add("text-sm", "font-semibold", "mt-2", "hover:text-mauve", "transition-colors");
+                readMoreButton.style.color = "var(--mauve)";
+                readMoreButton.textContent = "Read more";
+
+                // Add event listener to show the rest of the points
+                readMoreButton.addEventListener("click", () => {
+                    // Clear the list and add all points
+                    summaryList.innerHTML = "";
+                    day.summary.forEach(point => {
+                        const listItem = document.createElement("li");
+                        listItem.classList.add("text-sm");
+                        listItem.style.color = "var(--text)";
+                        listItem.textContent = point;
+                        summaryList.appendChild(listItem);
+                    });
+
+                    // Remove the "Read more" button after expanding
+                    readMoreButton.remove();
+                });
+
+                card.appendChild(summaryList);
+                card.appendChild(readMoreButton);
+            } else {
+                card.appendChild(summaryList);
+            }
+
+            // Append date heading to the top of the card
+            card.prepend(dateHeading);
             cardContainer.appendChild(card);
         });
     </script>
