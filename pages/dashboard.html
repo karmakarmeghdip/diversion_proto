@@ -1,99 +1,132 @@
 <!DOCTYPE html>
 <html lang="en" x-data="{ darkMode: true }" :class="darkMode ? 'dark' : 'light'">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/styles/tailwind.css">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <title>Dashboard</title>
-    <style>
-        :root {
-            --base: #24273a;
-            --crust: #181926;
-            --mantle: #1e2030;
-            --surface0: #363a4f;
-            --surface1: #494d64;
-            --text: #cad3f5;
-            --mauve: #c6a0f6;
-            --blue: #8aadf4;
-            --yellow: #eed49f;
-            --overlay0: #6e738d;
-        }
-
-        .theme-transition {
-            transition: all 0.3s ease;
-        }
-
-        .light {
-            --base: #eff1f5;
-            --crust: #dce0e8;
-            --mantle: #e6e9ef;
-            --surface0: #ccd0da;
-            --surface1: #bcc0cc;
-            --text: #4c4f69;
-            --mauve: #8839ef;
-            --blue: #1e66f5;
-            --yellow: #df8e1d;
-            --overlay0: #9ca0b0;
-        }
-    </style>
 </head>
-<body x-data class="min-h-screen flex flex-col items-center justify-center p-8 font-mono theme-transition" style="background-color: var(--base); color: var(--text);">
-    <!-- Navbar -->
-    <nav class="w-full shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50 theme-transition" style="background-color: var(--crust);">
-        <h1 class="text-2xl font-bold tracking-wider" style="color: var(--mauve);">El Psy Congru</h1>
-        
-        <div class="flex items-center space-x-6">
-            <!-- Theme Toggle -->
-            <button @click="darkMode = !darkMode" class="p-2 rounded-lg theme-transition" :style="darkMode ? 'background-color: var(--surface0)' : 'background-color: var(--surface1)'">
-                <svg x-show="darkMode" class="w-6 h-6" style="color: var(--yellow);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                </svg>
-                <svg x-show="!darkMode" class="w-6 h-6" style="color: var(--blue);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-                </svg>
-            </button>
-            
-            <button class="hover:text-mauve transition-all duration-300" style="color: var(--text);">Login</button>
-            <button class="hover:text-mauve transition-all duration-300" style="color: var(--text);">Signup</button>
-            
-            <div class="relative group">
-                <div class="w-10 h-10 rounded-full cursor-pointer theme-transition" style="background-color: var(--surface0); border: 2px solid var(--overlay0);">
-                    <img src="https://via.placeholder.com/40" alt="User" class="w-full h-full rounded-full">
-                </div>
-                <div class="absolute right-0 mt-2 w-48 rounded-lg hidden group-hover:block shadow-lg theme-transition" style="background-color: var(--mantle);">
-                    <a href="#" class="block px-4 py-2 rounded-t-lg hover:text-mauve transition-colors" style="color: var(--text);">Profile</a>
-                    <a href="#" class="block px-4 py-2 rounded-b-lg hover:text-mauve transition-colors" style="color: var(--text);">Logout</a>
-                </div>
+
+<style>
+    .tooltip {
+        position: relative;
+    }
+    
+    .tooltip .tooltip-text {
+        visibility: hidden;
+        position: absolute;
+        z-index: 100;
+        bottom: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+    }
+</style>
+</head>
+
+<body x-data class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 font-mono theme-transition"
+style="background-color: var(--base); color: var(--text);">
+<!-- Navbar -->
+<nav class="w-full shadow-lg px-3 sm:px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50 theme-transition"
+    style="background-color: var(--crust);">
+    <h1 class="text-2xl font-bold tracking-wider" style="color: var(--mauve);">
+        <a href="">yourmind.space</a>
+    </h1>
+    <div class="flex items-center space-x-3 sm:space-x-6">
+        <!-- Theme Toggle -->
+        <button @click="darkMode = !darkMode" class="p-2 rounded-lg theme-transition tooltip"
+            :style="darkMode ? 'background-color: var(--surface0)' : 'background-color: var(--surface1)'">
+            <span class="tooltip-text" style="background-color: var(--surface0); color: var(--text);">Mode Switch</span>
+            <svg x-show="darkMode" class="w-5 h-5 sm:w-6 sm:h-6" style="color: var(--yellow);" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                </path>
+            </svg>
+            <svg x-show="!darkMode" class="w-5 h-5 sm:w-6 sm:h-6" style="color: var(--blue);" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
+                </path>
+            </svg>
+        </button>
+
+        <!-- Diary Icon -->
+        <a href="/pages/summary.html" class="p-2 rounded-lg theme-transition hover:text-mauve tooltip"
+            :style="darkMode ? 'background-color: var(--surface0)' : 'background-color: var(--surface1)'">
+            <span class="tooltip-text" style="background-color: var(--surface0); color: var(--text);">Diary</span>
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" style="color: var(--text);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                </path>
+            </svg>
+        </a>
+
+        <!-- Authentication Icon -->
+        <a href="/pages/signup.html" class="p-2 rounded-lg theme-transition hover:text-mauve tooltip"
+            :style="darkMode ? 'background-color: var(--surface0)' : 'background-color: var(--surface1)'">
+            <span class="tooltip-text" style="background-color: var(--surface0); color: var(--text);">Authenticate</span>
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" style="color: var(--text);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z">
+                </path>
+            </svg>
+        </a>
+
+        <div class="relative group userout" x-data="{ isOpen: false }">
+            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full cursor-pointer theme-transition tooltip" @click="isOpen = !isOpen"
+                style="background-color: var(--surface0); border: 2px solid var(--overlay0);">
+                <span class="tooltip-text" style="background-color: var(--surface0); color: var(--text);">Profile</span>
+                <img src="../assests/user.png" alt="User" class="w-full h-full rounded-full">
+            </div>
+            <div class="absolute right-0 mt-2 w-48 rounded-lg shadow-lg theme-transition"
+                style="background-color: var(--mantle);" x-show="isOpen" @click.away="isOpen = false">
+                <a href="#" class="block px-4 py-2 rounded-t-lg hover:text-mauve transition-colors"
+                    style="color: var(--text);">Profile</a>
+                <a href="#" class="block px-4 py-2 rounded-b-lg hover:text-mauve transition-colors"
+                    style="color: var(--text);">Logout</a>
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <div class="mt-24 flex flex-col items-center">
-        <h1 class="text-4xl font-bold mb-6 px-6 py-3 rounded-xl shadow-lg tracking-wider theme-transition" style="background-color: var(--surface0);">
+    <div class="mt-20 sm:mt-24 w-full max-w-7xl px-4 flex flex-col items-center">
+        <h1 class="text-2xl sm:text-4xl font-bold mb-6 px-4 sm:px-6 py-3 rounded-xl shadow-lg tracking-wider theme-transition text-center"
+            style="background-color: var(--surface0);">
             Welcome User
         </h1>
 
-        <button
-            id="session-btn"
-            class="mt-4 px-6 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 theme-transition"
+        <button id="session-btn"
+            class="mt-4 px-4 sm:px-6 py-2 sm:py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 theme-transition"
             style="background-color: var(--mauve); color: var(--base);">
             Start a Session
         </button>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mt-6 w-full">
             <!-- Line Chart Container -->
-            <div class="p-6 rounded-lg shadow-lg theme-transition" style="background-color: var(--surface0);">
-                <p class="text-lg text-center mb-4" style="color: var(--text);">Daily Activity</p>
-                <div style="width: 600px; height: 400px;">
+            <div class="p-4 sm:p-6 rounded-lg shadow-lg theme-transition" style="background-color: var(--surface0);">
+                <p class="text-base sm:text-lg text-center mb-4" style="color: var(--text);">Daily Activity</p>
+                <div class="chart-container">
                     <canvas id="activityChart"></canvas>
                 </div>
             </div>
 
             <!-- Pie Chart Container -->
-            <div class="p-6 rounded-lg shadow-lg theme-transition" style="background-color: var(--surface0);">
-                <p class="text-lg text-center mb-4" style="color: var(--text);">Performance Breakdown</p>
-                <div style="width: 600px; height: 400px;">
+            <div class="p-4 sm:p-6 rounded-lg shadow-lg theme-transition" style="background-color: var(--surface0);">
+                <p class="text-base sm:text-lg text-center mb-4" style="color: var(--text);">Performance Breakdown</p>
+                <div class="chart-container">
                     <canvas id="performanceChart"></canvas>
                 </div>
             </div>
@@ -102,8 +135,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Add your chart initialization code here
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Activity Chart
             const activityCtx = document.getElementById('activityChart').getContext('2d');
             new Chart(activityCtx, {
@@ -119,7 +151,12 @@
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
                 }
             });
 
@@ -141,5 +178,7 @@
             });
         });
     </script>
+    <script src="/src/authClient.ts"></script>
 </body>
+
 </html>
