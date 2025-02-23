@@ -1,6 +1,6 @@
 import { createAuthClient } from "better-auth/client";
 
-const authClient = createAuthClient();
+export const authClient = createAuthClient();
 
 export async function signin() {
   const data = await authClient.signIn.social({
@@ -31,7 +31,9 @@ authClient.useSession.subscribe((v) => {
       el.classList.add("hidden");
     for (const el of document.getElementsByClassName("userout"))
       el.classList.remove("hidden");
-    (document.getElementById("profileimg") as HTMLImageElement).src = v.data.user.image || "/assests/user.png";
+    const profileimg = document.getElementById("profileimg");
+    if (profileimg)
+      (profileimg as HTMLImageElement).src = v.data.user.image || "/assests/user.png";
   } else {
     for (const el of document.getElementsByClassName("userin"))
       el.classList.remove("hidden");

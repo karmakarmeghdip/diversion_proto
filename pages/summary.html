@@ -5,9 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Combined Navigation and Summary Cards</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link rel="stylesheet" href="/styles/tailwind.css">
+    <link rel="stylesheet" href="../styles/main.css">
     <style>
         /* Catppuccin Mocha (Dark Mode) */
         .dark {
@@ -47,11 +46,12 @@
     class="min-h-screen flex flex-col items-center justify-center p-8 font-mono theme-transition"
     :class="{ 'dark': darkMode, 'light': !darkMode }" style="background-color: var(--base); color: var(--text);">
     <!-- Navbar -->
-    <nav class="w-full shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50 theme-transition" style="background-color: var(--crust);">
+    <nav class="w-full shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50 theme-transition"
+        style="background-color: var(--crust);">
         <h1 class="text-2xl font-bold tracking-wider" style="color: var(--mauve);">
-            <a href="index.html" >yourmind.space</a>
+            <a href="/dashboard">yourmind.space</a>
         </h1>
-        
+
         <div class="flex items-center space-x-6">
             <!-- Theme Toggle -->
             <button @click="darkMode = !darkMode" class="p-2 rounded-lg theme-transition"
@@ -69,16 +69,17 @@
                     </path>
                 </svg>
             </button>
-            
-            <a href="/pages/signup.html" class="p-2 rounded-lg theme-transition hover:text-mauve"
+
+            <a href="/signup" class="p-2 rounded-lg theme-transition hover:text-mauve"
                 :style="darkMode ? 'background-color: var(--surface0)' : 'background-color: var(--surface1)'">
-                <svg class="w-5 h-5 sm:w-6 sm:h-6" style="color: var(--text);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 sm:w-6 sm:h-6" style="color: var(--text);" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z">
                     </path>
                 </svg>
             </a>
-            
+
             <div class="relative group">
                 <div class="w-10 h-10 rounded-full cursor-pointer theme-transition"
                     style="background-color: var(--surface0); border: 2px solid var(--overlay0);">
@@ -86,9 +87,9 @@
                 </div>
                 <div class="absolute right-0 mt-2 w-48 rounded-lg hidden group-hover:block shadow-lg theme-transition"
                     style="background-color: var(--mantle);">
-                    <a href="#" class="block px-4 py-2 rounded-t-lg hover:text-mauve transition-colors"
+                    <a href="/profile" class="block px-4 py-2 rounded-t-lg hover:text-mauve transition-colors"
                         style="color: var(--text);">Profile</a>
-                    <a href="#" class="block px-4 py-2 rounded-b-lg hover:text-mauve transition-colors"
+                    <a href="#" class="block px-4 py-2 rounded-b-lg hover:text-mauve transition-colors" id="signout"
                         style="color: var(--text);">Logout</a>
                 </div>
             </div>
@@ -104,6 +105,7 @@
     </div>
 
     <script src="/src/summary.ts"></script>
+    <script src="/src/authClient.ts"></script>
 </body>
 
 </html>

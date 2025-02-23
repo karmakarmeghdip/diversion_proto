@@ -23,6 +23,7 @@
     "@types/alpinejs": "^3.13.11",
     "alpinejs": "^3.14.8",
     "better-auth": "^1.1.19",
+    "bun-plugin-tailwind": "^0.0.14",
     "chart.js": "^4.4.8",
     "hono": "^4.7.2",
     "mongodb": "^6.13.1",

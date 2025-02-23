@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diversion Prototype</title>
-    <link rel="stylesheet" href="/styles/tailwind.css">
+    <link rel="stylesheet" href="../styles/main.css">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         :root {
@@ -62,35 +62,39 @@
         }
     </style>
 </head>
-<body x-data="{ darkMode: true }" :class="darkMode ? '' : 'light'" class="min-h-screen flex flex-col items-center justify-center p-8 font-mono theme-transition" style="background-color: var(--base); color: var(--text);">
+
+<body x-data="{ darkMode: true }" :class="darkMode ? '' : 'light'"
+    class="min-h-screen flex flex-col items-center justify-center p-8 font-mono theme-transition"
+    style="background-color: var(--base); color: var(--text);">
     <!-- Navbar -->
     <nav class="w-full shadow-lg px-3 sm:px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50 theme-transition"
         style="background-color: var(--crust);">
         <h1 class="text-2xl font-bold tracking-wider" style="color: var(--mauve);">
-            <a href="dashboard.html" >yourmind.space</a>
+            <a href="/dashboard">yourmind.space</a>
         </h1>
 
         <div class="flex items-center space-x-3 sm:space-x-6">
             <!-- Theme Toggle -->
             <button @click="darkMode = !darkMode" class="p-2 rounded-lg theme-transition"
                 :style="darkMode ? 'background-color: var(--surface0)' : 'background-color: var(--surface1)'">
-                <svg x-show="darkMode" class="w-5 h-5 sm:w-6 sm:h-6" style="color: var(--yellow);" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24">
+                <svg x-show="darkMode" class="w-5 h-5 sm:w-6 sm:h-6" style="color: var(--yellow);" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
                     </path>
                 </svg>
-                <svg x-show="!darkMode" class="w-5 h-5 sm:w-6 sm:h-6" style="color: var(--blue);" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24">
+                <svg x-show="!darkMode" class="w-5 h-5 sm:w-6 sm:h-6" style="color: var(--blue);" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
                     </path>
                 </svg>
             </button>
 
-            <a href="/pages/signup.html" class="p-2 rounded-lg theme-transition hover:text-mauve"
+            <a href="/signup" class="p-2 rounded-lg theme-transition hover:text-mauve userin"
                 :style="darkMode ? 'background-color: var(--surface0)' : 'background-color: var(--surface1)'">
-                <svg class="w-5 h-5 sm:w-6 sm:h-6" style="color: var(--text);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 sm:w-6 sm:h-6" style="color: var(--text);" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z">
                     </path>
@@ -98,15 +102,14 @@
             </a>
 
             <div class="relative group userout" x-data="{ isOpen: false }">
-                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full cursor-pointer theme-transition" @click="isOpen = !isOpen"
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full cursor-pointer theme-transition"
+                    @click="isOpen = !isOpen"
                     style="background-color: var(--surface0); border: 2px solid var(--overlay0);">
                     <img src="../assests/user.png" alt="User" class="w-full h-full rounded-full">
                 </div>
                 <div class="absolute right-0 mt-2 w-48 rounded-lg shadow-lg theme-transition"
-                    style="background-color: var(--mantle);"
-                    x-show="isOpen"
-                    @click.away="isOpen = false">
-                    <a href="#" class="block px-4 py-2 rounded-t-lg hover:text-mauve transition-colors"
+                    style="background-color: var(--mantle);" x-show="isOpen" @click.away="isOpen = false">
+                    <a href="/profile" class="block px-4 py-2 rounded-t-lg hover:text-mauve transition-colors"
                         style="color: var(--text);">Profile</a>
                     <a href="#" class="block px-4 py-2 rounded-b-lg hover:text-mauve transition-colors"
                         style="color: var(--text);">Logout</a>
