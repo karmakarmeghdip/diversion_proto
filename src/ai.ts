@@ -14,6 +14,10 @@ const audioEl = document.getElementById("source") as HTMLAudioElement || documen
  */
 export async function init() {
   const tokenResponse = await fetch("/session");
+  if (!tokenResponse.ok) {
+    console.log(tokenResponse);
+    window.location.href = '/signup';
+  }
   const data = await tokenResponse.json();
   const EPHEMERAL_KEY = data.client_secret.value;
 
@@ -100,7 +104,7 @@ function appendUserMessageBubble(fullMessage: string) {
     role: 'user',
     content: fullMessage
   })
-  console.log(fullMessage);
+  console.log(transcript);
 }
 
 /**

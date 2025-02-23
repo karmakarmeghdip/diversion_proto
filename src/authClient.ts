@@ -9,8 +9,19 @@ export async function signin() {
   console.log(data);
 }
 
-for (const el of document.getElementsByClassName("google"))
-  el.addEventListener("click", signin);
+document.getElementById("google")?.addEventListener("click", signin);
+
+document.getElementById("signout")?.addEventListener("click", async () => {
+  const res = await authClient.signOut({
+    fetchOptions: {
+      onSuccess: () => {
+        console.log("Signed out");
+        window.location.href = "/signup";
+      }
+    }
+  });
+  console.log(res);
+});
 
 
 authClient.useSession.subscribe((v) => {
