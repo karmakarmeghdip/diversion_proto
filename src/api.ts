@@ -52,7 +52,7 @@ async function createSession(user_id: string | undefined) {
 async function processSessionFinish(userId: string, data: SessionTranscript) {
   console.log(data);
   console.log(userId);
-  
+
   const analysis = await analyzeConversation(data.transcript);
   console.log(analysis);
   const summary = await generateSummary(data.transcript);
@@ -117,8 +117,8 @@ export const app = new Hono()
 
     try {
       const data = await c.req.json<SessionTranscript>();
-      const results = await processSessionFinish(session.user.id, data);
-      return c.json(results);
+      setTimeout(async () => { const results = await processSessionFinish(session.user.id, data); })
+      return c.json({ message: "Processing complete" });
     } catch (e) {
       console.error(e);
       return c.json({ error: "Processing failed" }, 400);

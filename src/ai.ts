@@ -16,7 +16,7 @@ export async function init() {
   const tokenResponse = await fetch("/session");
   if (!tokenResponse.ok) {
     console.log(tokenResponse);
-    window.location.href = '/signup'
+    window.location.href = '/signup';
   }
   const data = await tokenResponse.json();
   const EPHEMERAL_KEY = data.client_secret.value;

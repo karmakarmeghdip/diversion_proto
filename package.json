@@ -3,7 +3,8 @@
   "module": "server.ts",
   "type": "module",
   "scripts": {
-    "css": "@tailwindcss/cli -i ./styles/main.css -o ./styles/tailwind.css --watch",
+    "css": "tailwindcss -i ./styles/main.css -o ./styles/tailwind.css --watch",
+    "build": "tailwindcss -i ./styles/main.css -o ./styles/tailwind.css",
     "dev": "bun run server.ts"
   },
   "devDependencies": {
