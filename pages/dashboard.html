@@ -77,9 +77,7 @@
                         id="profileimg">
                 </div>
                 <div class="absolute right-0 mt-2 w-48 rounded-lg hidden group-hover:block shadow-lg theme-transition"
-                    style="background-color: var(--mantle);">
-                    x-show="isOpen">
-                    @click.away="isOpen = false">
+                    style="background-color: var(--mantle);" x-show="isOpen" @click.away="isOpen = false">
                     <a href="/profile" class="block px-4 py-2 rounded-t-lg hover:text-mauve transition-colors"
                         style="color: var(--text);">Profile</a>
                     <a href="#" class="block px-4 py-2 rounded-b-lg hover:text-mauve transition-colors" id="signout"

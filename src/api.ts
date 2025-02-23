@@ -125,7 +125,7 @@ export const app = new Hono()
   })
 
   // User data routes
-  .get('/summary', async (c) => {
+  .get('/api/summary', async (c) => {
     /**
      * @description Retrieve user's conversation summaries
      * @returns {Array} List of conversation summaries
@@ -137,7 +137,7 @@ export const app = new Hono()
     return c.json(summaries);
   })
 
-  .get('/analysis', async (c) => {
+  .get('/api/analysis', async (c) => {
     /**
      * @description Retrieve user's conversation analyses
      * @returns {Array} List of conversation analyses

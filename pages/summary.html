@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,32 +42,47 @@
         }
     </style>
 </head>
-<body x-data="{ darkMode: false }" class="min-h-screen flex flex-col items-center justify-center p-8 font-mono theme-transition" :class="{ 'dark': darkMode, 'light': !darkMode }" style="background-color: var(--base); color: var(--text);">
+
+<body x-data="{ darkMode: false }"
+    class="min-h-screen flex flex-col items-center justify-center p-8 font-mono theme-transition"
+    :class="{ 'dark': darkMode, 'light': !darkMode }" style="background-color: var(--base); color: var(--text);">
     <!-- Navbar -->
-    <nav class="w-full shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50 theme-transition" style="background-color: var(--crust);">
+    <nav class="w-full shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50 theme-transition"
+        style="background-color: var(--crust);">
         <h1 class="text-2xl font-bold tracking-wider" style="color: var(--mauve);">El Psy Congru</h1>
-        
+
         <div class="flex items-center space-x-6">
             <!-- Theme Toggle -->
-            <button @click="darkMode = !darkMode" class="p-2 rounded-lg theme-transition" :style="darkMode ? 'background-color: var(--surface0)' : 'background-color: var(--surface1)'">
-                <svg x-show="darkMode" class="w-6 h-6" style="color: var(--yellow);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            <button @click="darkMode = !darkMode" class="p-2 rounded-lg theme-transition"
+                :style="darkMode ? 'background-color: var(--surface0)' : 'background-color: var(--surface1)'">
+                <svg x-show="darkMode" class="w-6 h-6" style="color: var(--yellow);" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                    </path>
                 </svg>
-                <svg x-show="!darkMode" class="w-6 h-6" style="color: var(--blue);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                <svg x-show="!darkMode" class="w-6 h-6" style="color: var(--blue);" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
+                    </path>
                 </svg>
             </button>
-            
+
             <button class="hover:text-mauve transition-all duration-300" style="color: var(--text);">Login</button>
             <button class="hover:text-mauve transition-all duration-300" style="color: var(--text);">Signup</button>
-            
+
             <div class="relative group">
-                <div class="w-10 h-10 rounded-full cursor-pointer theme-transition" style="background-color: var(--surface0); border: 2px solid var(--overlay0);">
+                <div class="w-10 h-10 rounded-full cursor-pointer theme-transition"
+                    style="background-color: var(--surface0); border: 2px solid var(--overlay0);">
                     <img src="https://via.placeholder.com/40" alt="User" class="w-full h-full rounded-full">
                 </div>
-                <div class="absolute right-0 mt-2 w-48 rounded-lg hidden group-hover:block shadow-lg theme-transition" style="background-color: var(--mantle);">
-                    <a href="#" class="block px-4 py-2 rounded-t-lg hover:text-mauve transition-colors" style="color: var(--text);">Profile</a>
-                    <a href="#" class="block px-4 py-2 rounded-b-lg hover:text-mauve transition-colors" style="color: var(--text);">Logout</a>
+                <div class="absolute right-0 mt-2 w-48 rounded-lg hidden group-hover:block shadow-lg theme-transition"
+                    style="background-color: var(--mantle);">
+                    <a href="#" class="block px-4 py-2 rounded-t-lg hover:text-mauve transition-colors"
+                        style="color: var(--text);">Profile</a>
+                    <a href="#" class="block px-4 py-2 rounded-b-lg hover:text-mauve transition-colors"
+                        style="color: var(--text);">Logout</a>
                 </div>
             </div>
         </div>
@@ -80,107 +96,9 @@
         <!-- Cards will be dynamically generated here -->
     </div>
 
-    <script>
-        // Function to format date as "21st Oct 2023"
-        const formatDate = (dateString) => {
-            const date = new Date(dateString);
-            const day = date.getDate();
-            const month = date.toLocaleString('default', { month: 'short' });
-            const year = date.getFullYear();
-            const daySuffix = (day === 1 || day === 21 || day === 31) ? 'st' :
-                             (day === 2 || day === 22) ? 'nd' :
-                             (day === 3 || day === 23) ? 'rd' : 'th';
-            return `${day}${daySuffix} ${month} ${year}`;
-        };
+    <script src="/src/summary.ts">
 
-        // Hardcoded dates and arbitrary summary points
-        const summaries = [
-            { 
-                date: "2023-10-01", 
-                summary: [
-                    "Discussed project timelines and deliverables.",
-                    "Reviewed design mockups and provided feedback.",
-                    "Brainstormed ideas for the new marketing campaign.",
-                    "Finalized the budget for Q4."
-                ]
-            },
-            { 
-                date: "2023-10-02", 
-                summary: [
-                    "Prepared for the client presentation.",
-                    "Conducted team training on new software."
-                ]
-            },
-            { 
-                date: "2023-10-03", 
-                summary: [
-                    "Wrapped up the week with a team meeting.",
-                    "Discussed project timelines and deliverables.",
-                    "Reviewed design mockups and provided feedback.",
-                    "Brainstormed ideas for the new marketing campaign.",
-                    "Finalized the budget for Q4."
-                ]
-            },
-            { 
-                date: "2023-10-04", 
-                summary: [
-                    "Prepared for the client presentation.",
-                    "Conducted team training on new software.",
-                    "Wrapped up the week with a team meeting."
-                ]
-            },
-            { 
-                date: "2023-10-05", 
-                summary: [
-                    "Discussed project timelines and deliverables.",
-                    "Reviewed design mockups and provided feedback."
-                ]
-            },
-            { 
-                date: "2023-10-06", 
-                summary: [
-                    "Brainstormed ideas for the new marketing campaign.",
-                    "Finalized the budget for Q4.",
-                    "Prepared for the client presentation.",
-                    "Conducted team training on new software."
-                ]
-            },
-            { 
-                date: "2023-10-07", 
-                summary: [
-                    "Wrapped up the week with a team meeting."
-                ]
-            }
-        ];
-
-        const cardContainer = document.getElementById("card-container");
-
-        // Generate cards dynamically
-        summaries.forEach(day => {
-            const card = document.createElement("div");
-            card.classList.add("card", "rounded-lg", "shadow-md", "p-6", "w-80", "transition-transform", "hover:transform", "hover:-translate-y-2", "theme-transition");
-            card.style.backgroundColor = "var(--surface0)";
-            card.style.color = "var(--text)";
-
-            const dateHeading = document.createElement("h3");
-            dateHeading.classList.add("text-lg", "font-semibold", "mb-4");
-            dateHeading.style.color = "var(--text)";
-            dateHeading.textContent = formatDate(day.date); // Format the date
-
-            const summaryList = document.createElement("ul");
-            summaryList.classList.add("list-disc", "pl-6", "space-y-2");
-            day.summary.forEach(point => {
-                const listItem = document.createElement("li");
-                listItem.classList.add("text-sm");
-                listItem.style.color = "var(--text)";
-                listItem.textContent = point;
-                summaryList.appendChild(listItem);
-            });
-
-            card.appendChild(dateHeading);
-            card.appendChild(summaryList);
-            cardContainer.appendChild(card);
-        });
     </script>
 </body>
+
 </html>
