@@ -70,14 +70,16 @@
             </a>
             <!-- <button class="hover:text-mauve transition-all duration-300 userin" style="color: var(--text);">Signup</button> -->
 
-            <div class="relative group userout">
-                <div class="w-10 h-10 rounded-full cursor-pointer theme-transition"
+            <div class="relative group userout" x-data="{ isOpen: false }">
+                <div class="w-10 h-10 rounded-full cursor-pointer theme-transition" @click="isOpen = !isOpen"
                     style="background-color: var(--surface0); border: 2px solid var(--overlay0);">
                     <img src="https://via.placeholder.com/40" alt="User" class="w-full h-full rounded-full"
                         id="profileimg">
                 </div>
                 <div class="absolute right-0 mt-2 w-48 rounded-lg hidden group-hover:block shadow-lg theme-transition"
                     style="background-color: var(--mantle);">
+                    x-show="isOpen">
+                    @click.away="isOpen = false">
                     <a href="/profile" class="block px-4 py-2 rounded-t-lg hover:text-mauve transition-colors"
                         style="color: var(--text);">Profile</a>
                     <a href="#" class="block px-4 py-2 rounded-b-lg hover:text-mauve transition-colors" id="signout"
