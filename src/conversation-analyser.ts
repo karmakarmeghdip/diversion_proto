@@ -1,4 +1,6 @@
 import OpenAI from 'openai';
+import { z } from 'zod';
+import { zodResponseFormat } from 'openai/helpers/zod';
 
 // Types
 interface Message {
@@ -24,10 +26,17 @@ const client = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY // Make sure to set this in your environment
 });
 
+// Fix the Zod schema
+const AnalysisSchema = z.object({
+    overall_mood: z.string(),
+    average_mood_score: z.number(),
+    mood_distribution: z.record(z.string(), z.number())
+}).required();
+
 /**
  * Analyzes a full conversation, extracting only user messages for emotion tracking.
  */
-export async function analyzeConversation(conversation: Message[]): Promise<string> {
+export async function analyzeConversation(conversation: Message[]) {
     // Extract only user messages
     const userMessages = conversation
         .map(msg => msg.content);
@@ -68,50 +77,27 @@ export async function analyzeConversation(conversation: Message[]): Promise<stri
     }
     `;
 
+    // Fix the API call
     const response = await client.chat.completions.create({
-        model: "gpt-4",
+        model: "gpt-4o-2024-08-06",  // Changed from "gpt-4o-2024-08-06" which seems incorrect
         messages: [{ role: "user", content: prompt }],
+        response_format: { type: "json_object" },
         max_tokens: 1000
     });
 
-    return response.choices[0].message.content || '';
+    // Parse the response manually
+    const content = JSON.parse(response.choices[0].message.content || '{}');
+    return content;
 }
 
 /**
  * Generates relevant follow-up questions based on the conversation and analysis.
  */
-export async function generateFollowUpQuestions(
-    conversation: Message[],
-    analysis: string
-): Promise<string[]> {
-    const prompt = `
-    Based on this conversation and analysis:
-    
-    Conversation:
-    ${JSON.stringify(conversation, null, 2)}
-    
-    Analysis:
-    ${analysis}
-    
-    Generate 3-5 empathetic follow-up questions that would be appropriate to ask the user.
-    Focus on their emotional state and potential solutions to their concerns.
-    Return only the questions, one per line.
-    `;
-
-    const response = await client.chat.completions.create({
-        model: "gpt-4",
-        messages: [{ role: "user", content: prompt }],
-        max_tokens: 500
-    });
-
-    const content = response.choices[0].message.content || '';
-    return content.split('\n').filter(q => q.trim());
-}
 
 // Example usage
 async function main() {
     const conversation: Message[] = [
-        { role: "user", content: "I feel exhausted after today's work." },
+        { role: "user", content: "I feel happy after today's work." },
         { role: "assistant", content: "That sounds tough. Did anything specific make it stressful?" },
         { role: "user", content: "Yeah, my manager keeps giving me extra tasks at the last minute." },
         { role: "assistant", content: "That's frustrating. Have you tried talking to them about it?" },
@@ -127,11 +113,7 @@ async function main() {
         console.log(analysisJson);
 
         // Generate follow-up questions
-        const followUpQuestions = await generateFollowUpQuestions(conversation, analysisJson);
-        console.log("\nPossible follow-up questions:");
-        followUpQuestions.forEach((question, index) => {
-            console.log(`${index + 1}. ${question}`);
-        });
+        
     } catch (error) {
         console.error("Error analyzing conversation:", error);
     }

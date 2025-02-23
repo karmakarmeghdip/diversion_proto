@@ -50,12 +50,13 @@ async function createSession(user_id: string | undefined) {
 }
 
 async function processSessionFinish(userId: string, data: SessionTranscript) {
-  const raw = await analyzeConversation(data.transcript);
-  const analysis = await AnalysisSchema.parseAsync(JSON.parse(raw));
-
-  const summary_raw = await generateSummary(data.transcript);
-  const summary = await SummarySchema.parseAsync(JSON.parse(summary_raw));
-
+  console.log(data);
+  console.log(userId);
+  
+  const analysis = await analyzeConversation(data.transcript);
+  console.log(analysis);
+  const summary = await generateSummary(data.transcript);
+  console.log(summary);
   const db = await connectToDatabase();
   const summaries = db.collection("summaries");
   const analyses = db.collection("analyses");
@@ -125,7 +126,7 @@ export const app = new Hono()
   })
 
   // User data routes
-  .get('/summary', async (c) => {
+  .get('/api/summary', async (c) => {
     /**
      * @description Retrieve user's conversation summaries
      * @returns {Array} List of conversation summaries
@@ -137,7 +138,7 @@ export const app = new Hono()
     return c.json(summaries);
   })
 
-  .get('/analysis', async (c) => {
+  .get('/api/analysis', async (c) => {
     /**
      * @description Retrieve user's conversation analyses
      * @returns {Array} List of conversation analyses
