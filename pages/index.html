@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" x-data="{ darkMode: true }" :class="darkMode ? '' : 'light'">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,9 +41,20 @@
         }
 
         @keyframes mic-wave {
-            0% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.2); opacity: 0.5; }
-            100% { transform: scale(1); opacity: 0.8; }
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: scale(1.2);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
         }
 
         .mic-active {
@@ -50,32 +62,48 @@
         }
     </style>
 </head>
-<body x-data="{ darkMode: true }" :class="darkMode ? '' : 'light'" class="min-h-screen flex flex-col items-center justify-center p-8 font-mono theme-transition" style="background-color: var(--base); color: var(--text);">
+
+<body x-data="{ darkMode: true }" :class="darkMode ? '' : 'light'"
+    class="min-h-screen flex flex-col items-center justify-center p-8 font-mono theme-transition"
+    style="background-color: var(--base); color: var(--text);">
     <!-- Navbar section remains the same -->
-    <nav class="w-full shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50 theme-transition" style="background-color: var(--crust);">
+    <nav class="w-full shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50 theme-transition"
+        style="background-color: var(--crust);">
         <h1 class="text-2xl font-bold tracking-wider" style="color: var(--mauve);">El Psy Congru</h1>
-        
+
         <div class="flex items-center space-x-6">
             <!-- Theme Toggle -->
-            <button @click="darkMode = !darkMode" class="p-2 rounded-lg theme-transition" :style="darkMode ? 'background-color: var(--surface0)' : 'background-color: var(--surface1)'">
-                <svg x-show="darkMode" class="w-6 h-6" style="color: var(--yellow);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+            <button @click="darkMode = !darkMode" class="p-2 rounded-lg theme-transition"
+                :style="darkMode ? 'background-color: var(--surface0)' : 'background-color: var(--surface1)'">
+                <svg x-show="darkMode" class="w-6 h-6" style="color: var(--yellow);" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                    </path>
                 </svg>
-                <svg x-show="!darkMode" class="w-6 h-6" style="color: var(--blue);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                <svg x-show="!darkMode" class="w-6 h-6" style="color: var(--blue);" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
+                    </path>
                 </svg>
             </button>
 
-            <button class="hover:text-mauve transition-all duration-300" style="color: var(--text);">Login</button>
-            <button class="hover:text-mauve transition-all duration-300" style="color: var(--text);">Signup</button>
-            
-            <div class="relative group">
-                <div class="w-10 h-10 rounded-full cursor-pointer theme-transition" style="background-color: var(--surface0); border: 2px solid var(--overlay0);">
+            <button class="hover:text-mauve transition-all duration-300 userin"
+                style="color: var(--text);">Login</button>
+            <!-- <button class="hover:text-mauve transition-all duration-300" style="color: var(--text);">Signup</button> -->
+
+            <div class="relative group userout">
+                <div class="w-10 h-10 rounded-full cursor-pointer theme-transition"
+                    style="background-color: var(--surface0); border: 2px solid var(--overlay0);">
                     <img src="/assests/user.png" alt="User" class="w-full h-full rounded-full">
                 </div>
-                <div class="absolute right-0 mt-2 w-48 rounded-lg hidden group-hover:block shadow-lg theme-transition" style="background-color: var(--mantle);">
-                    <a href="#" class="block px-4 py-2 rounded-t-lg hover:text-mauve transition-colors" style="color: var(--text);">Profile</a>
-                    <a href="#" class="block px-4 py-2 rounded-b-lg hover:text-mauve transition-colors" style="color: var(--text);">Logout</a>
+                <div class="absolute right-0 mt-2 w-48 rounded-lg hidden group-hover:block shadow-lg theme-transition"
+                    style="background-color: var(--mantle);">
+                    <a href="#" class="block px-4 py-2 rounded-t-lg hover:text-mauve transition-colors"
+                        style="color: var(--text);">Profile</a>
+                    <a href="#" class="block px-4 py-2 rounded-b-lg hover:text-mauve transition-colors"
+                        style="color: var(--text);">Logout</a>
                 </div>
             </div>
         </div>
@@ -85,7 +113,8 @@
     <div class="mt-24"></div>
 
     <!-- Demo Section -->
-    <h1 class="text-2xl font-bold mb-8 px-8 py-4 rounded-xl shadow-lg tracking-wider text-center transition-all theme-transition" style="background-color: var(--surface0); color: var(--text);">
+    <h1 class="text-2xl font-bold mb-8 px-8 py-4 rounded-xl shadow-lg tracking-wider text-center transition-all theme-transition"
+        style="background-color: var(--surface0); color: var(--text);">
         Start Chatting
     </h1>
 
@@ -94,9 +123,12 @@
 
     <!-- Visualisation and Transcript Container -->
     <div class="w-full max-w-4xl px-4">
-        <canvas id="visualisation" class="w-full h-20 rounded-t-lg shadow-lg theme-transition" style="background-color: var(--surface0);"></canvas>
-        
-        <div id="transcript" class="min-h-[300px] w-full p-6 rounded-b-lg overflow-y-auto backdrop-blur-sm theme-transition" style="background-color: var(--surface0); color: var(--text);">
+        <canvas id="visualisation" class="w-full h-20 rounded-t-lg shadow-lg theme-transition"
+            style="background-color: var(--surface0);"></canvas>
+
+        <div id="transcript"
+            class="min-h-[300px] w-full p-6 rounded-b-lg overflow-y-auto backdrop-blur-sm theme-transition"
+            style="background-color: var(--surface0); color: var(--text);">
             <!-- Transcript content will go here -->
         </div>
     </div>
@@ -104,87 +136,58 @@
     <!-- Controls -->
     <div id="app" x-data="{ muted: false }" class="flex justify-center items-center gap-6 mt-8 w-full">
         <!-- Mic Button (Now on the left) -->
-        <button 
-            @click="muted = !muted"
+        <button @click="muted = !muted" id="mic-btn"
             class="p-3 rounded-full shadow-lg hover:shadow-xl focus:outline-none theme-transition"
             :class="{ 'mic-active': !muted }"
-            :style="muted ? 'background-color: var(--red); color: var(--base);' : 'background-color: var(--surface0); color: var(--text);'"
-        >
+            :style="muted ? 'background-color: var(--red); color: var(--base);' : 'background-color: var(--surface0); color: var(--text);'">
             <!-- Microphone Icon (Unmuted) -->
-            <svg 
-                class="w-6 h-6" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-                x-show="!muted"
-            >
-                <path 
-                    stroke-linecap="round" 
-                    stroke-linejoin="round" 
-                    stroke-width="2" 
-                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
-                />
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" x-show="!muted">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
             </svg>
             <!-- Muted Microphone Icon -->
-            <svg 
-                class="w-6 h-6" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-                x-show="muted"
-            >
-                <path 
-                    stroke-linecap="round" 
-                    stroke-linejoin="round" 
-                    stroke-width="2" 
-                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
-                />
-                <line 
-                    x1="5" 
-                    y1="5" 
-                    x2="19" 
-                    y2="19" 
-                    stroke="currentColor" 
-                    stroke-width="2" 
-                    stroke-linecap="round"
-                />
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" x-show="muted">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                <line x1="5" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
             </svg>
         </button>
 
         <!-- Done Button -->
-        <button 
-            class="px-8 py-3 rounded-full shadow-lg hover:shadow-xl focus:outline-none"
-            style="background-color: var(--mauve); color: var(--base);"
-        >
+        <button class="px-8 py-3 rounded-full shadow-lg hover:shadow-xl focus:outline-none" id="done-btn"
+            style="background-color: var(--mauve); color: var(--base);">
             Done
         </button>
     </div>
 
     <script>
         // Basic audio visualization setup
-        document.addEventListener('DOMContentLoaded', function() {
-            const canvas = document.getElementById('visualisation');
-            const ctx = canvas.getContext('2d');
-            
-            // Set canvas size
-            function resizeCanvas() {
-                canvas.width = canvas.offsetWidth;
-                canvas.height = canvas.offsetHeight;
-            }
-            
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
-            
-            // Basic animation (placeholder)
-            function draw() {
-                ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--surface0');
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                requestAnimationFrame(draw);
-            }
-            
-            draw();
-        });
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     const canvas = document.getElementById('visualisation');
+        //     const ctx = canvas.getContext('2d');
+
+        //     // Set canvas size
+        //     function resizeCanvas() {
+        //         canvas.width = canvas.offsetWidth;
+        //         canvas.height = canvas.offsetHeight;
+        //     }
+
+        //     resizeCanvas();
+        //     window.addEventListener('resize', resizeCanvas);
+
+        //     // Basic animation (placeholder)
+        //     function draw() {
+        //         ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--surface0');
+        //         ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        //         requestAnimationFrame(draw);
+        //     }
+
+        //     draw();
+        // });
     </script>
+    <script src="/src/main.ts"></script>
+    <script src="/src/authClient.ts"></script>
 </body>
+
 </html>

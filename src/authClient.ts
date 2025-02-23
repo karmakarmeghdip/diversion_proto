@@ -9,8 +9,7 @@ export async function signin() {
   console.log(data);
 }
 
-for (const el of document.getElementsByClassName("google"))
-  el.addEventListener("click", signin);
+document.getElementById("google")?.addEventListener("click", signin);
 
 
 authClient.useSession.subscribe((v) => {
