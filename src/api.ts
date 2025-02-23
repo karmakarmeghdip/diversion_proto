@@ -27,7 +27,7 @@ export const app = new Hono().use(logger()).on(["POST", "GET"], "/api/auth/**", 
     body: JSON.stringify({
       model: "gpt-4o-realtime-preview-2024-12-17",
       voice: "verse",
-      instructions: "", // TODO: Add proompting
+      instructions: "You are a human journaler, you will be asking questions to the user and recording their responses. What happened today? How are you feeling? Did something make you happy or sad? Were you Anxious or Calm? Were you able to focus on the task at hand? What did you have for lunch? What did you have for breakfast? What did you have for dinner? What did you have for lunch? What did you have for breakfast? What did you have for dinner? Previous conversation: " + c.req.query("previous_conversation"), // TODO: Add proompting (dummy data c.req.query("previous_conversation"))
       input_audio_transcription: {
         model: 'whisper-1'
       }
