@@ -36,7 +36,7 @@ const AnalysisSchema = z.object({
 /**
  * Analyzes a full conversation, extracting only user messages for emotion tracking.
  */
-export async function analyzeConversation(conversation: Message[]): Promise<string> {
+export async function analyzeConversation(conversation: Message[]) {
     // Extract only user messages
     const userMessages = conversation
         .map(msg => msg.content);
@@ -87,7 +87,7 @@ export async function analyzeConversation(conversation: Message[]): Promise<stri
 
     // Parse the response manually
     const content = JSON.parse(response.choices[0].message.content || '{}');
-    return JSON.stringify(content);
+    return content;
 }
 
 /**

@@ -33,7 +33,9 @@ export async function generateSummary(conversation: Message[]): Promise<Summary>
     const prompt = `
     Create a concise summary of the following conversation.
     Extract the most important points and insights.
-    
+    The summary should be in bullet points.
+    The summary should be written in the style of a personal journal entry. 
+    Do not include what the assistant said, only the user's messages.
     Conversation:
     ${conversationText}`;
 

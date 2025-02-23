@@ -50,12 +50,13 @@ async function createSession(user_id: string | undefined) {
 }
 
 async function processSessionFinish(userId: string, data: SessionTranscript) {
-  const raw = await analyzeConversation(data.transcript);
-  const analysis = await AnalysisSchema.parseAsync(JSON.parse(raw));
-
-  const summary_raw = await generateSummary(data.transcript);
-  const summary = await SummarySchema.parseAsync(JSON.parse(summary_raw));
-
+  console.log(data);
+  console.log(userId);
+  
+  const analysis = await analyzeConversation(data.transcript);
+  console.log(analysis);
+  const summary = await generateSummary(data.transcript);
+  console.log(summary);
   const db = await connectToDatabase();
   const summaries = db.collection("summaries");
   const analyses = db.collection("analyses");
