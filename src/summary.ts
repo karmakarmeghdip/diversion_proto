@@ -13,64 +13,10 @@ const formatDate = (dateString) => {
 };
 
 // Hardcoded dates and arbitrary summary points
-const summaries = [
-  {
-    date: "2023-10-01",
-    summary: [
-      "Discussed project timelines and deliverables.",
-      "Reviewed design mockups and provided feedback.",
-      "Brainstormed ideas for the new marketing campaign.",
-      "Finalized the budget for Q4."
-    ]
-  },
-  {
-    date: "2023-10-02",
-    summary: [
-      "Prepared for the client presentation.",
-      "Conducted team training on new software."
-    ]
-  },
-  {
-    date: "2023-10-03",
-    summary: [
-      "Wrapped up the week with a team meeting.",
-      "Discussed project timelines and deliverables.",
-      "Reviewed design mockups and provided feedback.",
-      "Brainstormed ideas for the new marketing campaign.",
-      "Finalized the budget for Q4."
-    ]
-  },
-  {
-    date: "2023-10-04",
-    summary: [
-      "Prepared for the client presentation.",
-      "Conducted team training on new software.",
-      "Wrapped up the week with a team meeting."
-    ]
-  },
-  {
-    date: "2023-10-05",
-    summary: [
-      "Discussed project timelines and deliverables.",
-      "Reviewed design mockups and provided feedback."
-    ]
-  },
-  {
-    date: "2023-10-06",
-    summary: [
-      "Brainstormed ideas for the new marketing campaign.",
-      "Finalized the budget for Q4.",
-      "Prepared for the client presentation.",
-      "Conducted team training on new software."
-    ]
-  },
-  {
-    date: "2023-10-07",
-    summary: [
-      "Wrapped up the week with a team meeting."
-    ]
-  }
-];
+const summaries: {
+  date: string;
+  summary: string[];
+}[] = [];
 
 const result = await client.api.summary.$get();
 console.log(result);
@@ -78,7 +24,13 @@ if (!result.ok) {
   throw new Error("Failed to fetch summaries");
 }
 
-console.log(await result.json())
+const arr = (await result.json());
+arr.forEach((summary) => {
+  summaries.push({
+    date: summary.date,
+    summary: summary.summary.key_points
+  })
+});
 
 const cardContainer = document.getElementById("card-container");
 
