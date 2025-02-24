@@ -1,47 +1,195 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" x-data="{ darkMode: true, userData: null }" :class="darkMode ? 'dark' : 'light'">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile Page</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <script src="/src/tailwind.ts"></script>
+    <!-- <link rel="stylesheet" href="../styles/tailwind.css"> -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        :root {
+            --base: #24273a;
+            --crust: #181926;
+            --mantle: #1e2030;
+            --surface0: #363a4f;
+            --surface1: #494d64;
+            --text: #cad3f5;
+            --mauve: #c6a0f6;
+            --blue: #8aadf4;
+            --yellow: #eed49f;
+            --overlay0: #6e738d;
+            --green: #a6da95;
+        }
+
+        .theme-transition {
+            transition: all 0.3s ease;
+        }
+
+        .light {
+            --base: #eff1f5;
+            --crust: #dce0e8;
+            --mantle: #e6e9ef;
+            --surface0: #ccd0da;
+            --surface1: #bcc0cc;
+            --text: #4c4f69;
+            --mauve: #8839ef;
+            --blue: #1e66f5;
+            --yellow: #df8e1d;
+            --overlay0: #9ca0b0;
+            --green: #40a02b;
+        }
+
+        .profile-card {
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-  <div class="bg-white rounded-lg shadow-lg p-8 max-w-2xl w-full flex flex-col md:flex-row md:items-start space-y-6 md:space-y-0 md:space-x-8">
-    <!-- Profile Picture -->
-    <div class="flex-shrink-0">
-      <img
-        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces&auto=format&q=80"
-        alt="Profile Picture"
-        class="w-32 h-32 rounded-full border-4 border-blue-500 object-cover"
-      />
+
+<body x-data="{ 
+    async fetchUserData() {
+        try {
+            const response = await getUserData();
+            this.userData = response;
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    }
+}" x-init="fetchUserData()"
+    class="min-h-screen flex flex-col items-center justify-center p-8 font-mono theme-transition"
+    style="background-color: var(--base); color: var(--text);">
+
+    <!-- Navbar -->
+    <nav class="w-full shadow-lg px-6 py-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50 theme-transition"
+        style="background-color: var(--crust);">
+        <h1 class="text-2xl font-bold tracking-wider" style="color: var(--mauve);">
+            <a href="/">yourmind.space</a>
+        </h1>
+
+        <div class="flex items-center space-x-6">
+            <!-- Theme Toggle -->
+            <button @click="darkMode = !darkMode" class="p-2 rounded-lg theme-transition"
+                :style="darkMode ? 'background-color: var(--surface0)' : 'background-color: var(--surface1)'">
+                <svg x-show="darkMode" class="w-6 h-6" style="color: var(--yellow);" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+                    </path>
+                </svg>
+                <svg x-show="!darkMode" class="w-6 h-6" style="color: var(--blue);" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
+                    </path>
+                </svg>
+            </button>
+
+            <div class="relative group">
+                <div class="w-10 h-10 rounded-full cursor-pointer theme-transition"
+                    style="background-color: var(--surface0); border: 2px solid var(--overlay0);">
+                    <img :src="userData?.profilePicture || 'https://via.placeholder.com/40'" alt="User"
+                        class="w-full h-full rounded-full object-cover">
+
+                </div>
+    </nav>
+
+    <!-- Profile Container -->
+    <div x-show="userData" x-cloak
+        class="rounded-lg shadow-lg p-8 max-w-2xl w-full profile-card flex flex-col md:flex-row md:items-start space-y-6 md:space-y-0 md:space-x-8 theme-transition mt-20"
+        style="background-color: var(--surface0);">
+        <!-- Profile Picture -->
+        <div class="flex-shrink-0">
+            <img :src="userData?.profilePicture" :alt="userData?.name + '\'s Profile Picture'"
+                class="w-32 h-32 rounded-full object-cover theme-transition" style="border: 4px solid var(--mauve);" />
+        </div>
+
+        <!-- Profile Details -->
+        <div class="flex-1">
+            <h1 class="text-3xl font-bold mb-2 theme-transition" style="color: var(--text);" x-text="userData?.name">
+            </h1>
+            <p class="mb-4 theme-transition" style="color: var(--text);">
+                <span class="font-semibold">Email:</span>
+                <span x-text="userData?.email"></span>
+            </p>
+
+            <!-- Email Verification -->
+            <div class="flex items-center mb-4">
+                <span class="font-semibold theme-transition" style="color: var(--text);">Email Verified:</span>
+                <span class="ml-2 px-3 py-1 text-sm font-semibold rounded-full theme-transition"
+                    :style="userData?.emailVerified ? 'background-color: var(--green); color: var(--mantle)' : 'background-color: var(--yellow); color: var(--mantle)'"
+                    x-text="userData?.emailVerified ? 'Verified' : 'Pending'">
+                </span>
+            </div>
+
+            <!-- Streak -->
+            <div class="flex items-center mb-4">
+                <span class="font-semibold theme-transition" style="color: var(--text);">Streak:</span>
+                <span class="ml-2 px-3 py-1 text-sm font-semibold rounded-full theme-transition flex items-center"
+                    :style="userData?.streak > 0 ? 'background-color: var(--green); color: var(--mantle)' : 'background-color: var(--red); color: var(--mantle)'">
+                    <span x-text="userData?.streak + ' days'"></span>
+                    <svg x-show="userData?.streak > 0" class="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </span>
+            </div>
+
+            <!-- Account Created -->
+            <p class="mb-2 theme-transition" style="color: var(--text);">
+                <span class="font-semibold">Account Created:</span>
+                <span
+                    x-text="new Date(userData?.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })"></span>
+            </p>
+
+            <!-- Last Updated -->
+            <p class="theme-transition" style="color: var(--text);">
+                <span class="font-semibold">Last Updated:</span>
+                <span
+                    x-text="new Date(userData?.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })"></span>
+            </p>
+
+
+        </div>
     </div>
 
-    <!-- Profile Details -->
-    <div class="flex-1">
-      <h1 class="text-3xl font-bold text-gray-800 mb-2">John Doe</h1>
-      <p class="text-gray-600 mb-4">
-        <span class="font-semibold">Email:</span> johndoe@example.com
-      </p>
-
-      <!-- Email Verification -->
-      <div class="flex items-center mb-4">
-        <span class="font-semibold text-gray-600">Email Verified:</span>
-        <span class="ml-2 px-2 py-1 text-sm font-semibold rounded-full bg-green-100 text-green-600">
-          True
-        </span>
-      </div>
-
-      <!-- Account Created -->
-      <p class="text-gray-600 mb-2">
-        <span class="font-semibold">Account Created:</span> January 1, 2023
-      </p>
-
-      <!-- Last Updated -->
-      <p class="text-gray-600">
-        <span class="font-semibold">Last Updated:</span> October 10, 2023
-      </p>
+    <!-- Loading State -->
+    <div x-show="!userData" class="rounded-lg shadow-lg p-8 max-w-2xl w-full flex items-center justify-center"
+        style="background-color: var(--surface0);">
+        <div class="animate-spin rounded-full h-12 w-12 border-4"
+            style="border-color: var(--mauve) transparent var(--mauve) transparent"></div>
     </div>
-  </div>
+    <script src="/src/profile.ts"></script>
+
+    <script>
+        // Function to simulate getting user data
+        function getUserData() {
+            // This would typically be an API call
+
+
+            // resolve({
+            //     name: "John Doe",
+            //     email: "johndoe@example.com",
+            //     emailVerified: true,
+            //     streak: "2",
+            //     profilePicture: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=faces&auto=format&q=80",
+            //     createdAt: "2023-01-01T00:00:00.000Z",
+            //     updatedAt: "2023-10-10T00:00:00.000Z"
+            // });
+            return new Promise((resolve, reject) => {
+                window.addEventListener('getUserDReady', () => {
+                    console.log(window.getUserD);
+                    const out = window.getUserD();
+                    console.log(out);
+                    resolve(out);
+                })
+            })
+
+        }
+
+    </script>
 </body>
+
 </html>
