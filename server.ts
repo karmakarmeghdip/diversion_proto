@@ -11,15 +11,14 @@ if (!process.env.OPENAI_API_KEY) {
 }
 
 Bun.serve({
-  // Serve multiple static files
-  static: {
+  routes: {
     '/': index,
     '/dashboard': dashboard,
     '/signup': signup,
     '/profile': profilepage,
     '/summary': summarypage
   },
-  development: true,
+  // development: true,
   fetch: app.fetch
 });
 
