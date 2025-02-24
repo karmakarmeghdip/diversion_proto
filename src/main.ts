@@ -10,8 +10,6 @@ let isPaused = false;
 
 console.log("main.ts loaded");
 
-
-console.log("DOM loaded");
 document.getElementById("mic-btn")?.addEventListener("click", () => {
   console.log("Mic button clicked");
   if (isPaused) {

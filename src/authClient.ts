@@ -24,6 +24,7 @@ document.getElementById("signout")?.addEventListener("click", async () => {
 });
 
 
+let timer: Timer;
 authClient.useSession.subscribe((v) => {
   console.log(v);
   if (v.data) {
@@ -34,12 +35,19 @@ authClient.useSession.subscribe((v) => {
     const profileimg = document.getElementById("profileimg");
     if (profileimg)
       (profileimg as HTMLImageElement).src = v.data.user.image || "/assests/user.png";
+    if (timer) {
+      clearTimeout(timer)
+    };
   } else {
     for (const el of document.getElementsByClassName("userin"))
       el.classList.remove("hidden");
 
     for (const el of document.getElementsByClassName("userout"))
       el.classList.add("hidden");
-
+    if (window.location.pathname !== '/signup' && !v.isPending) {
+      timer = setTimeout(() => {
+        window.location.href = "/signup";
+      }, 2000)
+    }
   }
 });

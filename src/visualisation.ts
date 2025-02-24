@@ -19,6 +19,8 @@ function initAudio() {
       if (audioCtx.state === 'suspended') {
         audioCtx.resume();
       }
+      console.log("Mic button clicked");
+      console.log(audioCtx)
       resolve(audioCtx)
     });
   });
@@ -29,6 +31,8 @@ audioCtx = await initAudio();
 
 // Create a MediaElementAudioSourceNode from the audio element
 const sourceNode = audioCtx.createMediaElementSource(audioElement);
+
+console.log(sourceNode)
 
 // Create an AnalyserNode
 const analyser = audioCtx.createAnalyser();
@@ -52,6 +56,7 @@ function resizeCanvas() {
     canvas.width = container.clientWidth;
     canvas.height = container.clientHeight;
   }
+  console.log('Resized canvas to', canvas.width, 'x', canvas.height);
 }
 
 // Add event listener for resize
@@ -95,5 +100,6 @@ export function draw() {
   // Draw a line to the end of the canvas (centered vertically)
   canvasCtx.lineTo(canvas.width, canvas.height / 2);
   canvasCtx.stroke();
+  console.log('Drawing waveform');
   requestAnimationFrame(draw);
 }
