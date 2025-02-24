@@ -7,7 +7,7 @@
     <title>Diversion Prototype</title>
     <script src="/src/tailwind.ts"></script>
     <!-- <link rel="stylesheet" href="../styles/tailwind.css"> -->
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="/node_modules/alpinejs/dist/cdn.js"></script>
     <style>
         :root {
             --base: #24273a;
@@ -170,33 +170,6 @@
             Done
         </button>
     </div>
-
-    <script>
-        // Basic audio visualization setup
-        // document.addEventListener('DOMContentLoaded', function () {
-        //     const canvas = document.getElementById('visualisation');
-        //     const ctx = canvas.getContext('2d');
-
-        //     // Set canvas size
-        //     function resizeCanvas() {
-        //         canvas.width = canvas.offsetWidth;
-        //         canvas.height = canvas.offsetHeight;
-        //     }
-
-        //     resizeCanvas();
-        //     window.addEventListener('resize', resizeCanvas);
-
-        //     // Basic animation (placeholder)
-        //     function draw() {
-        //         ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--surface0');
-        //         ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        //         requestAnimationFrame(draw);
-        //     }
-
-        //     draw();
-        // });
-    </script>
     <script src="/src/main.ts"></script>
     <script src="/src/authClient.ts"></script>
 </body>

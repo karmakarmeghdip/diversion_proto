@@ -31,8 +31,6 @@ canvas.height = window.innerHeight;
 
 // This function will draw the waveform on the canvas repeatedly.
 export function draw() {
-  requestAnimationFrame(draw);
-
   // Copy the current time-domain data into our array
   analyser.getByteTimeDomainData(dataArray);
   if (!canvasCtx) {
@@ -68,4 +66,5 @@ export function draw() {
   // Draw a line to the end of the canvas (centered vertically)
   canvasCtx.lineTo(canvas.width, canvas.height / 2);
   canvasCtx.stroke();
+  requestAnimationFrame(draw);
 }

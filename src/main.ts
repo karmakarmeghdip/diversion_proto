@@ -3,7 +3,7 @@ import { draw } from './visualisation';
 
 
 init();
-draw();
+requestAnimationFrame(draw);
 
 let isPaused = false;
 

@@ -149,7 +149,7 @@ export const done = async () => {
     }
   });
   if (res.ok) {
-    window.location.href = "/dashboard";
+    window.location.href = "/summary";
   }
   console.log(res);
 }
