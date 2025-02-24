@@ -6,9 +6,26 @@ if (!audioElement || !canvas) {
 }
 const canvasCtx = canvas.getContext('2d');
 
-// Create an AudioContext (with fallback for older browsers)
-// @ts-ignore
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let audioCtx: AudioContext | undefined;
+
+function initAudio() {
+  return new Promise<AudioContext>((resolve, reject) => {
+    document.getElementById("mic-btn")?.addEventListener("click", () => {
+      if (!audioCtx) {
+        // @ts-ignore
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        // Initialize other audio nodes here
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      resolve(audioCtx)
+    });
+  });
+}
+
+// Add to your mic button click handler in main.ts
+audioCtx = await initAudio();
 
 // Create a MediaElementAudioSourceNode from the audio element
 const sourceNode = audioCtx.createMediaElementSource(audioElement);
@@ -28,6 +45,18 @@ analyser.connect(audioCtx.destination);
 // (Optional) Set the canvas dimensions; here we make it fill the window.
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
+function resizeCanvas() {
+  const container = canvas.parentElement;
+  if (container) {
+    canvas.width = container.clientWidth;
+    canvas.height = container.clientHeight;
+  }
+}
+
+// Add event listener for resize
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas(); // Initial sizing
 
 // This function will draw the waveform on the canvas repeatedly.
 export function draw() {

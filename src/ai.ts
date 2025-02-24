@@ -8,6 +8,7 @@ const transcript: {
   content: string;
 }[] = [];
 
+let mediaStream: MediaStream | null = null;
 const audioEl = document.getElementById("source") as HTMLAudioElement || document.createElement("audio");
 /**
  * Initializes the WebRTC connection and sets up event listeners.
@@ -27,6 +28,7 @@ export async function init() {
   pc.ontrack = (e) => { audioEl.srcObject = e.streams[0]; }
 
   const ms = await navigator.mediaDevices.getUserMedia({ audio: true });
+  mediaStream = ms;
   pc.addTrack(ms.getTracks()[0]);
 
   const dc = pc.createDataChannel("oai-events");
@@ -120,10 +122,18 @@ function appendUserMessageBubble(fullMessage: string) {
  * Pauses audio transmission by disabling the local audio track.
  */
 export const pause = () => {
-  audioEl.pause()
+  // console.log("pause");
+  // audioEl.pause()
+  if (mediaStream) {
+    for (const track of mediaStream.getTracks()) {
+      track.enabled = false;
+      // console.log(track);
+    }
+  }
   for (const sender of pc.getSenders()) {
     if (sender.track) {
       sender.track.enabled = false;
+      // console.log(sender.track);
     }
   }
 }
@@ -132,10 +142,18 @@ export const pause = () => {
  * Resumes audio transmission by enabling the local audio track.
  */
 export const play = () => {
-  audioEl.play()
+  // console.log("play");
+  // audioEl.play()
+  if (mediaStream) {
+    for (const track of mediaStream.getTracks()) {
+      track.enabled = true;
+      // console.log(track);
+    }
+  }
   for (const sender of pc.getSenders()) {
     if (sender.track) {
       sender.track.enabled = true;
+      // console.log(sender.track);
     }
   }
 }
