@@ -31,6 +31,14 @@ export async function init() {
 
   const dc = pc.createDataChannel("oai-events");
   dc.addEventListener("message", (e) => handleIncomingMessage(e));
+  dc.addEventListener("open", () => {
+    dc.send(JSON.stringify({
+      type: "response.create",
+      response: {
+        instructions: "This is the system. Start by asking the user about their day and keep the conversation engaging.",
+      },
+    }))
+  })
 
   const offer = await pc.createOffer();
   await pc.setLocalDescription(offer);
@@ -51,6 +59,7 @@ export async function init() {
     sdp: await sdpResponse.text(),
   };
   await pc.setRemoteDescription(answer);
+
 }
 
 /**
